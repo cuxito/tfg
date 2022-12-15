@@ -22,4 +22,6 @@ if(isset($_GET["controller"])){
     $controllerObj=cargarControlador(CONTROLADOR_DEFECTO);
     lanzarAccion($controllerObj);
 }
+
+hola
 ?>
