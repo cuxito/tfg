@@ -23,5 +23,4 @@ if(isset($_GET["controller"])){
     lanzarAccion($controllerObj);
 }
 
-hola
 ?>
