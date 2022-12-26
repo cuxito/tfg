@@ -14,10 +14,10 @@ class productosModel extends Conexion{
      
         try {
             if($categoria == ""){
-                $sql = "select id_producto, nombre_prod, cantidad_prod, stock, PVP, descuento, imagen, n_ventas from $this->table";
+                $sql = "select id_producto, nombre_prod, cantidad_prod, stock, PVP, descuento, imagen, n_ventas, nom_prov from $this->table left join proveedores on productos.cod_prov = proveedores.cod_prov where productos.stock > 0";
             }
             else{
-                $sql = "select id_producto, nombre_prod, cantidad_prod, stock, PVP, descuento, imagen, n_ventas from $this->table where categoria = '$categoria'";
+                $sql = "select id_producto, nombre_prod, cantidad_prod, stock, PVP, descuento, imagen, n_ventas, nom_prov from $this->table left join proveedores on productos.cod_prov = proveedores.cod_prov where productos.stock > 0 and categoria = '$categoria'";
 
             }
             $statement = $this->conexion->query($sql);
