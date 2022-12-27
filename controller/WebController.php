@@ -118,8 +118,14 @@ class WebController extends ControladorBase {
             $this->view("conectarse", $data);
         }
         if (isset($_POST['productos'])){
-            $categoria = "";
-            $data = $this->productosmodel->getAll($categoria);
+            if(!isset($_SESSION['limite'])){
+                $_SESSION['limite'] = 9;
+            }
+            $_SESSION['categoria']="";
+            $_SESSION['pagactual']=1;
+            $paginas = $this->Conteo();
+            $_SESSION['pags']=$paginas;
+            $data = $this->productosmodel->getProductos($_SESSION['categoria'], 1, $_SESSION['limite']);
             $this -> view("productos", $data);
         }
         
@@ -139,31 +145,32 @@ class WebController extends ControladorBase {
             $this->view("insertprov", $data);
         }
         if(isset($_POST['listcompra'])){
-            $data = (array("compras"=> $this->comprasmodel->getAll($_SESSION['idcliente'])));
+            $data = (array("compras"=> $this->comprasmodel->getProductos($_SESSION['idcliente'])));
             $this->view("listcompra", $data);
         }
     }
     public function menucategorias() {
+        if(!isset($_SESSION['limite'])){
+                $_SESSION['limite'] = 9;
+            }
+        $_SESSION['pagactual']=1;
+        $categoria = implode($_POST);
+        $_SESSION['pags'] = $this->Conteo();
+        $_SESSION['categoria']=$categoria;
+        $data = $this->productosmodel->getProductos($_SESSION['categoria'], 1, $_SESSION['limite']);
+        $this -> view("productos", $data);
+    }
+    public function Conteo(){
+        $conteo = $this->productosmodel->getConteo($_SESSION['categoria']);
+        $conteo = $conteo[0]['conteo'];
+        $paginas = ceil($conteo/ $_SESSION['limite']);
+        return $paginas;
+    }
 
-        if(isset($_POST['suplementos'])){
-            $categoria = 'suplementos';
-        }
-        if(isset($_POST['frescos'])){
-            $categoria = 'frescos';
-        }
-        if(isset($_POST['alimentacion'])){
-            $categoria = 'alimentacion';
-        }
-        if(isset($_POST['cosmetica-e-higiene'])){
-            $categoria = 'cosmetica-e-higiene';
-        }
-        if(isset($_POST['mama-y-bebe'])){
-            $categoria = 'mama-y-bebe';
-        }
-        if(isset($_POST['hogar-y-huerto'])){
-            $categoria = 'hogar-y-huerto';
-        }
-        $data = $this->productosmodel->getAll($categoria);
+    public function paginacion(){
+        $_SESSION['pagactual']=implode($_POST);
+        $_SESSION['pags'] = $this->Conteo();
+        $data = $this->productosmodel->getProductos($_SESSION['categoria'], $_SESSION['pagactual'], $_SESSION['limite']);   
         $this -> view("productos", $data);
     }
 

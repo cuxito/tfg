@@ -1,3 +1,8 @@
+<?php 
+if(isset($_GET['pagina'])){
+  echo 'hola';
+};
+?>
 
 <div id="prod_container" class="container">
     <div class="row row-cols-lg-3 row-cols-1 justify-content-evenly">
@@ -28,5 +33,24 @@
         echo '</div>';
     }
 ?>
+
     </div>
+
 </div>
+
+<form method="POST" action="<?php echo $this->url("web", "paginacion"); ?>">
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <?php 
+        for($x=$_SESSION['pagactual']-2; $x <= $_SESSION['pagactual']+2; $x++){
+          if($x>0 && $x<=$_SESSION['pags']){
+            echo '<input type="submit" class="page-link" value="'.$x.'" name="'.$x.'"></input>';
+          };
+        };
+
+      ?>
+      <input type="submit" class="page-link" value="&raquo;" name="previous"></input>
+      
+    </ul>
+  </nav>
+</form>
