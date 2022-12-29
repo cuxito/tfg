@@ -150,12 +150,14 @@ class WebController extends ControladorBase {
         }
     }
     public function menucategorias() {
+        
+        $paginas = $this->Conteo();
+        $_SESSION['pags'] = $paginas;
         if(!isset($_SESSION['limite'])){
                 $_SESSION['limite'] = 9;
             }
         $_SESSION['pagactual']=1;
-        $categoria = implode($_POST);
-        $_SESSION['pags'] = $this->Conteo();
+        $categoria = str_replace(" ", "-", implode($_POST));
         $_SESSION['categoria']=$categoria;
         $data = $this->productosmodel->getProductos($_SESSION['categoria'], 1, $_SESSION['limite']);
         $this -> view("productos", $data);
@@ -168,7 +170,17 @@ class WebController extends ControladorBase {
     }
 
     public function paginacion(){
-        $_SESSION['pagactual']=implode($_POST);
+        var_dump($_POST);
+        if(implode($_POST)=='«'){
+            $_SESSION['pagactual']=$_SESSION['pagactual']-1;
+        }else{
+            if(implode($_POST)=='»'){
+                $_SESSION['pagactual']=$_SESSION['pagactual']+1;  
+            }else{
+                $_SESSION['pagactual']=implode($_POST);
+            }
+        };
+        echo $_SESSION['pagactual'];
         $_SESSION['pags'] = $this->Conteo();
         $data = $this->productosmodel->getProductos($_SESSION['categoria'], $_SESSION['pagactual'], $_SESSION['limite']);   
         $this -> view("productos", $data);

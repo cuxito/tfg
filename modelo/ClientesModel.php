@@ -6,12 +6,12 @@ class ClientesModel extends Conexion {
     private $conexion;
 
     public function __construct() {
-        $this->table = "clientes";
+        $this->table = "usuarios";
         $this->conexion = $this->getConexion();
     }
 
      function comprobarusuclave($nombre, $clave) {
-        $consulta = "select * from clientes where nombre= ?";
+        $consulta = "select * from $this->table where nombre_comp= ?";
         $conn = $this->getConexion();
         if ($conn == null) {
             return "<h2>ERROR. CONEXIÓN NO ESTABLECIDA.</h2>";
@@ -22,7 +22,7 @@ class ClientesModel extends Conexion {
             $sentencia->execute();
             if ($sentencia->rowCount() == 1) { //existe usu
                 $row = $sentencia->fetch();
-                if (password_verify($clave, $row['clave'])) {
+                if (password_verify($clave, $row['pass'])) {
                     // "Validado. Clave correcta.";
                     return new Clientes($row['idcliente'],
                             $row['perfil'],

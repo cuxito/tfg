@@ -38,18 +38,24 @@ if(isset($_GET['pagina'])){
 
 </div>
 
+
 <form method="POST" action="<?php echo $this->url("web", "paginacion"); ?>">
   <nav aria-label="Page navigation example">
     <ul class="pagination">
       <?php 
-        for($x=$_SESSION['pagactual']-2; $x <= $_SESSION['pagactual']+2; $x++){
-          if($x>0 && $x<=$_SESSION['pags']){
-            echo '<input type="submit" class="page-link" value="'.$x.'" name="'.$x.'"></input>';
-          };
+      echo '<p>'.$_SESSION['pags'].'</p>';
+      if($_SESSION['pagactual']!=1){
+        echo '<input type="submit" class="page-link" value="&laquo;" name="previous"></input>';
+      };
+      for($x=$_SESSION['pagactual']-2; $x <= $_SESSION['pagactual']+2; $x++){
+        if($x>0 && $x<=$_SESSION['pags']){
+          echo '<input type="submit" class="page-link" value="'.$x.'" name="'.$x.'"></input>';
         };
-
+      };
+      if($_SESSION['pagactual']!=$_SESSION['pags']){
+        echo '<input type="submit" class="page-link" value="&raquo;" name="next"></input>';
+      };
       ?>
-      <input type="submit" class="page-link" value="&raquo;" name="previous"></input>
       
     </ul>
   </nav>
