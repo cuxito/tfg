@@ -148,6 +148,10 @@ class WebController extends ControladorBase {
             $data = array();
             $this->view("conectarse", $data);
         }
+        if(isset($_POST['registrarse'])){
+            $data = array();
+            $this->view("registrarse", $data);
+        }
         if (isset($_POST['productos'])){
             if(!isset($_SESSION['limite'])){
                 $_SESSION['limite'] = 9;
