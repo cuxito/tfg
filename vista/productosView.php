@@ -1,8 +1,3 @@
-<?php 
-if(isset($_GET['pagina'])){
-  echo 'hola';
-};
-?>
 
 <div id="prod_container" class="container">
     <div class="row row-cols-lg-3 row-cols-1 justify-content-evenly">
@@ -43,7 +38,6 @@ if(isset($_GET['pagina'])){
   <nav aria-label="Page navigation example">
     <ul class="pagination">
       <?php 
-      echo '<p>'.$_SESSION['pags'].'</p>';
       if($_SESSION['pagactual']!=1){
         echo '<input type="submit" class="page-link" value="&laquo;" name="previous"></input>';
       };

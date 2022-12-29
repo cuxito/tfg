@@ -8,8 +8,8 @@
     }?>
     <div class="border rounded p-2">
         <div class="mb-3">
-            <label class="form-label">Teclea nombre usuario:</label>
-            <input type="text" class="form-control" name="nombre">
+            <label class="form-label">Teclea email usuario:</label>
+            <input type="text" class="form-control" name="email">
         </div>
         <div class="mb-3">
             <label class="form-label">Teclea Contraseña</label>

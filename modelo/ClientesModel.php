@@ -10,40 +10,39 @@ class ClientesModel extends Conexion {
         $this->conexion = $this->getConexion();
     }
 
-     function comprobarusuclave($nombre, $clave) {
-        $consulta = "select * from $this->table where nombre_comp= ?";
+     function comprobarusuclave($email, $clave) {
+        $consulta = "select * from $this->table where email= ?";
         $conn = $this->getConexion();
         if ($conn == null) {
             return "<h2>ERROR. CONEXIÓN NO ESTABLECIDA.</h2>";
         }
         try {
             $sentencia = $conn->prepare($consulta);
-            $sentencia->bindParam(1, $nombre);
+            $sentencia->bindParam(1, $email);
             $sentencia->execute();
             if ($sentencia->rowCount() == 1) { //existe usu
                 $row = $sentencia->fetch();
                 if (password_verify($clave, $row['pass'])) {
                     // "Validado. Clave correcta.";
-                    return new Clientes($row['idcliente'],
-                            $row['perfil'],
-                            $row['nombre'],$row['direccion'],$row['email'],
-                            $row['clave'],$row['telef'],$row['fechaalta']); 
+                    return new Clientes($row['id_usuario'],
+                            $row['nombre_comp'],
+                            $row['email'],$row['pass'],$row['tipo']); 
                 } else {
                     return "Usuario existe. Clave incorrecta.";
                 }
             } else {
-                return "Usuario " . $nombre . " no existe.";
+                return "Usuario " . $email . " no existe.";
             }
         } catch (PDOException $e) {
             return $e->getMessage();
         }
     }
     
-    public function getClientenombre($nombre) {
+    public function getClienteemail($email) {
         try {
-            $sql = "select * from $this->table where nombre=?";
+            $sql = "select * from $this->table where email=?";
             $sentencia = $this->conexion->prepare($sql);
-            $sentencia->bindParam(1, $nombre);
+            $sentencia->bindParam(1, $$email);
             $sentencia->execute();
             $row = $sentencia->fetch();
             if ($row) {
@@ -73,11 +72,10 @@ class ClientesModel extends Conexion {
         }
     }
     
-    public function insertaCliente($perfil, $nombre, $direccion,
-            $email, $clave, $telef, $fechaalta) {
+    public function insertaCliente($nombre, $email, $clave, $tipo) {
 
-        $consulta = "insert into clientes (perfil, nombre, direccion, email, clave, telef, fechaalta) "
-                . " values(?, ?, ?, ?, ?, ?, ?)";
+        $consulta = "insert into $this->table (id_usuario, nombre_comp, email, pass, tipo) "
+                . " values('', ?, ?, ?, ?)";
         $conn = $this->getConexion();
         if ($conn == null) {
             return "<h2>ERROR. CONEXIÓN NO ESTABLECIDA.</h2>";
@@ -85,13 +83,10 @@ class ClientesModel extends Conexion {
         try {
             $password = password_hash($clave, PASSWORD_DEFAULT);
             $sentencia = $conn->prepare($consulta);
-            $sentencia->bindParam(1, $perfil);
-            $sentencia->bindParam(2, $nombre);
-            $sentencia->bindParam(3, $direccion);
-            $sentencia->bindParam(4, $email);
-            $sentencia->bindParam(5, $password);
-            $sentencia->bindParam(6, $telef);
-            $sentencia->bindParam(7, $fechaalta);
+            $sentencia->bindParam(1, $nombre);
+            $sentencia->bindParam(2, $email);
+            $sentencia->bindParam(3, $password);
+            $sentencia->bindParam(4, $tipo);
             $num = $sentencia->execute();
             return $conn->lastInsertId();
         } catch (PDOException $e) {

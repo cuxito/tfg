@@ -13,22 +13,14 @@
             <input type="text" class="form-control" name="nombre">
         </div>
         <div class="mb-3">
-            <label class="form-label">Direccion</label>
-            <input type="text" class="form-control" name="direccion">
-        </div>
-        <div class="mb-3">
           <label class="form-label">Email</label>
           <input type="email" class="form-control" name="email">
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Telefono</label>
-            <input type="number" class="form-control" name="telef">
         </div>
         <div class="mb-3">
           <label class="form-label">Password</label>
           <input type="password" class="form-control" name="clave">
         </div>
-
+            <input type="text" hidden name="tipo" value="administrador">
         <button type="submit" class="btn btn-primary w-100">Submit</button>
     </div>
 </form>

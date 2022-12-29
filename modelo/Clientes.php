@@ -2,41 +2,27 @@
 
 class Clientes{
     
-    private $idcliente;
-    private $perfil;
-    private $nombre;
-    private $direccion;
+    private $id_usuario;
+    private $nombre_comp;
     private $email;
     private $clave;
-    private $telef;
-    private $fechaalta;
+    private $tipo;
     
-    function __construct($idcliente, $perfil, $nombre, $direccion, $email, $clave, $telef, $fechaalta) {
-        $this->idcliente = $idcliente;
-        $this->perfil = $perfil;
-        $this->nombre = $nombre;
-        $this->direccion = $direccion;
+    function __construct($id_usuario, $nombre_comp,  $email, $clave, $tipo) {
+        $this->id_usuario = $id_usuario;
+        $this->nombre_comp = $nombre_comp;
         $this->email = $email;
         $this->clave = $clave;
-        $this->telef = $telef;
-        $this->fechaalta = $fechaalta;
+        $this->tipo = $tipo;
     }
 
     
-    function getIdcliente() {
-        return $this->idcliente;
+    function getId_usuario() {
+        return $this->id_usuario;
     }
 
-    function getPerfil() {
-        return $this->perfil;
-    }
-
-    function getNombre() {
-        return $this->nombre;
-    }
-
-    function getDireccion() {
-        return $this->direccion;
+    function getNombre_comp() {
+        return $this->nombre_comp;
     }
 
     function getEmail() {
@@ -47,28 +33,16 @@ class Clientes{
         return $this->clave;
     }
 
-    function getTelef() {
-        return $this->telef;
+    function getTipo() {
+        return $this->tipo;
     }
 
-    function getFechaalta() {
-        return $this->fechaalta;
+    function setId_usuario($id_usuario): void {
+        $this->id_usuario = $id_usuario;
     }
 
-    function setIdcliente($idcliente): void {
-        $this->idcliente = $idcliente;
-    }
-
-    function setPerfil($perfil): void {
-        $this->perfil = $perfil;
-    }
-
-    function setNombre($nombre): void {
-        $this->nombre = $nombre;
-    }
-
-    function setDireccion($direccion): void {
-        $this->direccion = $direccion;
+    function setNombre_comp($nombre_comp): void {
+        $this->nombre_comp = $nombre_comp;
     }
 
     function setEmail($email): void {
@@ -79,12 +53,8 @@ class Clientes{
         $this->clave = $clave;
     }
 
-    function setTelef($telef): void {
-        $this->telef = $telef;
-    }
-
-    function setFechaalta($fechaalta): void {
-        $this->fechaalta = $fechaalta;
+    function setTipo($tipo): void {
+        $this->tipo = $tipo;
     }
 
         

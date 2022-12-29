@@ -20,6 +20,9 @@
                 <li class="nav-item">
                   <input type="submit" name="productos" value="Productos" class="nav-link bg-dark border-0 text-white" />
                 </li>
+                <li class="nav-item">
+                  <input type="submit" name="registrarse" value="Registrate" class="nav-link bg-dark border-0 text-white" />
+                </li>
                 <?php 
                     if(isset($_SESSION['perfil'])){
                         if($_SESSION['perfil']==1){

@@ -22,41 +22,37 @@ class WebController extends ControladorBase {
     }
    
     public function conectarse(){
-            $nombre = $_POST['nombre'];
+            $email = $_POST['email'];
             $clave = $_POST['clave'];
-            $datos = $this->clientesmodel->comprobarusuclave($nombre, $clave);
+            $datos = $this->clientesmodel->comprobarusuclave($email, $clave);
             if (is_object($datos)) {
+                $nombre = $datos->getNombre_comp();
                 $dat = array('mensaje' => "Bienvenido usuario: " . $nombre,
                     'nombre' => $nombre, 'clave' => $clave);
 
-                $_SESSION['perfil'] = $datos->getPerfil();
+                $_SESSION['perfil'] = 1;
                 $_SESSION['nombre'] = $nombre;
-                $_SESSION['idcliente'] = $datos->getIdcliente();
+                $_SESSION['idcliente'] = $datos->getId_usuario();
             } else {
-                $dat = array('mensaje' => $datos, 'nombre' => $nombre, 'clave' => $clave);
+                $dat = array('mensaje' => $datos, 'nombre' => $email, 'clave' => $clave);
             }
         $this->view("conectarse", $dat);
     }
 
     public function registrar(){
-        $perfil = 2;
         $nombre = $_POST['nombre'];
-        $direccion = $_POST['direccion'];
         $email = $_POST['email'];
-        $telef = $_POST['telef'];
         $clave = $_POST['clave'];
-        $fechaalta = date("Y-m-d H:i:s");
-        $cliente = new Clientes(0, $perfil, $nombre, $direccion, $email, $clave,
-                $telef,0);
-        //comprobamos que el viaje no exista
-        $men = $this->clientesmodel->getClientenombre($nombre);
+        $tipo = $_POST['tipo'];
+        $cliente = new Clientes(0, $nombre, $email, $clave, $tipo);
+        $men = $this->clientesmodel->getClienteemail($email);
         if (is_object($men)) {
             $mensaje = "Ya existe un cliente con ese nombre.";
             $cliente = $men;
         } else {
-            $lastid = $this->clientesmodel->insertaCliente($perfil, $nombre, $direccion, $email, $clave, $telef, $fechaalta);
+            $lastid = $this->clientesmodel->insertaCliente($nombre, $email, $clave, $tipo);
             if (is_numeric($lastid)) {
-                $_SESSION['perfil']=$perfil;
+                $_SESSION['perfil']=1;
                 $_SESSION['nombre']=$nombre;
                 $mensaje = "Usuario Registrado ";
             } else {
@@ -205,7 +201,6 @@ class WebController extends ControladorBase {
     }
 
     public function paginacion(){
-        var_dump($_POST);
         if(implode($_POST)=='«'){
             $_SESSION['pagactual']=$_SESSION['pagactual']-1;
         }else{
@@ -215,7 +210,6 @@ class WebController extends ControladorBase {
                 $_SESSION['pagactual']=implode($_POST);
             }
         };
-        echo $_SESSION['pagactual'];
         $_SESSION['pags'] = $this->Conteo();
         $data = $this->productosmodel->getProductos($_SESSION['categoria'], $_SESSION['pagactual'], $_SESSION['limite']);   
         $this -> view("productos", $data);
