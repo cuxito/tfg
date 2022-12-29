@@ -37,6 +37,37 @@ class WebController extends ControladorBase {
             }
         $this->view("conectarse", $dat);
     }
+
+    public function registrar(){
+        $perfil = 2;
+        $nombre = $_POST['nombre'];
+        $direccion = $_POST['direccion'];
+        $email = $_POST['email'];
+        $telef = $_POST['telef'];
+        $clave = $_POST['clave'];
+        $fechaalta = date("Y-m-d H:i:s");
+        $cliente = new Clientes(0, $perfil, $nombre, $direccion, $email, $clave,
+                $telef,0);
+        //comprobamos que el viaje no exista
+        $men = $this->clientesmodel->getClientenombre($nombre);
+        if (is_object($men)) {
+            $mensaje = "Ya existe un cliente con ese nombre.";
+            $cliente = $men;
+        } else {
+            $lastid = $this->clientesmodel->insertaCliente($perfil, $nombre, $direccion, $email, $clave, $telef, $fechaalta);
+            if (is_numeric($lastid)) {
+                $_SESSION['perfil']=$perfil;
+                $_SESSION['nombre']=$nombre;
+                $mensaje = "Usuario Registrado ";
+            } else {
+                $mensaje = "HA OCURRIDO UN ERROR EN LA INSERCIÓN";
+            }
+        }
+        $dat = array("cliente"=>$cliente, "mensaje"=>$mensaje);
+        $this->view("registrarse", $dat);
+        
+    }
+
     
     public function modprov() {
         $id = $_POST['codproveedor'];
