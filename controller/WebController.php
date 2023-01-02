@@ -148,6 +148,10 @@ class WebController extends ControladorBase {
             $data = array();
             $this->view("registrarse", $data);
         }
+        if(isset($_POST['accionesusu'])){
+            $data = array();
+            $this->view("accionesusu", $data);
+        }
         if (isset($_POST['productos'])){
             if(!isset($_SESSION['limite'])){
                 $_SESSION['limite'] = 9;
@@ -215,7 +219,12 @@ class WebController extends ControladorBase {
         $this -> view("productos", $data);
     }
 
-    
+    public function acciones(){
+        if(isset($_POST['añadirusu'])){
+            $data = array();
+            $this->view("añadirusu", $data);
+        };
+    }
 }
 
 ?>
