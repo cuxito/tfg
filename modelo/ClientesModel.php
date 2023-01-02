@@ -42,15 +42,13 @@ class ClientesModel extends Conexion {
         try {
             $sql = "select * from $this->table where email=?";
             $sentencia = $this->conexion->prepare($sql);
-            $sentencia->bindParam(1, $$email);
+            $sentencia->bindParam(1, $email);
             $sentencia->execute();
             $row = $sentencia->fetch();
             if ($row) {
-                $cliente = new Clientes($row['idcliente'],
-                        $row['perfil'], $row['nombre'],
-                        $row['direccion'], $row['email'],
-                        $row['clave'], $row['telef'],
-                        $row['fechaalta']);
+                $cliente = new Clientes($row['id_usuario'],
+                            $row['nombre_comp'],
+                            $row['email'],$row['pass'],$row['tipo']); 
                 return $cliente;
             }
 

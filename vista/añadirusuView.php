@@ -6,22 +6,23 @@
     ?>
     
     <form action="<?php echo $this->url("web", "registrar")?>" class="col-6" method="post">
-    <h4 class="text-center">Registrarse</h4>
+    <h4 class="text-center">Añadir usuario nuevo</h4>
     <div class="border rounded p-2">
         <div class="mb-3">
             <label class="form-label">Nombre</label>
-            <input type="text" class="form-control" name="nombre">
+            <input type="text" class="form-control" name="nombre" required>
         </div>
         <div class="mb-3">
           <label class="form-label">Email</label>
-          <input type="email" class="form-control" name="email">
+          <input type="email" class="form-control" name="email" required>
         </div>
         <div class="mb-3">
           <label class="form-label">Password</label>
-          <input type="password" class="form-control" name="clave">
+          <input type="password" class="form-control" name="clave" required>
         </div>
-        <div class="mb-3">
-            <select name="tipo" class="form-select">
+        <div class="mb-3"> 
+            <label class="form-label">Tipo:</label>
+            <select name="tipo" class="form-select" required>
                 <option value="cliente">Cliente</option>
                 <option value="empleado">Empleado</option>
                 <option value="administrador">Administrador</option>

@@ -47,20 +47,29 @@ class WebController extends ControladorBase {
         $cliente = new Clientes(0, $nombre, $email, $clave, $tipo);
         $men = $this->clientesmodel->getClienteemail($email);
         if (is_object($men)) {
-            $mensaje = "Ya existe un cliente con ese nombre.";
+            $mensaje = "Ya existe un cliente con ese email.";
             $cliente = $men;
         } else {
             $lastid = $this->clientesmodel->insertaCliente($nombre, $email, $clave, $tipo);
             if (is_numeric($lastid)) {
-                $_SESSION['perfil']=1;
-                $_SESSION['nombre']=$nombre;
+                if($_SESSION['perfil']!=1){
+                    $_SESSION['nombre']=$nombre;
+                    if($tipo=="empleado"){
+                        $_SESSION['perfil']=2;
+                    }else{$_SESSION['perfil']=3;}
+                }
                 $mensaje = "Usuario Registrado ";
             } else {
                 $mensaje = "HA OCURRIDO UN ERROR EN LA INSERCIÓN";
             }
         }
         $dat = array("cliente"=>$cliente, "mensaje"=>$mensaje);
-        $this->view("registrarse", $dat);
+        if($_SESSION['perfil']==1){
+            $this->view("añadirusu", $dat);
+        }else{
+            $this->view("registrarse", $dat);
+        };
+        
         
     }
 

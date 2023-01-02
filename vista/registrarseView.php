@@ -10,15 +10,15 @@
     <div class="border rounded p-2">
         <div class="mb-3">
             <label class="form-label">Nombre</label>
-            <input type="text" class="form-control" name="nombre">
+            <input type="text" class="form-control" name="nombre" required>
         </div>
         <div class="mb-3">
           <label class="form-label">Email</label>
-          <input type="email" class="form-control" name="email">
+          <input type="email" class="form-control" name="email" required>
         </div>
         <div class="mb-3">
           <label class="form-label">Password</label>
-          <input type="password" class="form-control" name="clave">
+          <input type="password" class="form-control" name="clave" required>
         </div>
         <button type="submit" class="btn btn-primary w-100">Submit</button>
     </div>
