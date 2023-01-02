@@ -20,6 +20,13 @@
           <label class="form-label">Password</label>
           <input type="password" class="form-control" name="clave">
         </div>
+        <div class="mb-3">
+            <select name="tipo" class="form-select">
+                <option value="cliente">Cliente</option>
+                <option value="empleado">Empleado</option>
+                <option value="administrador">Administrador</option>
+            </select>
+        </div>
         <button type="submit" class="btn btn-primary w-100">Submit</button>
     </div>
 </form>

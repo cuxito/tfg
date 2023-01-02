@@ -30,6 +30,9 @@
                                     <input type="submit" name="listmodprov" value="Listar/Modificar proveedores" class="nav-link bg-dark border-0 text-white" />
                                   </li>
                                   <li class="nav-item">
+                                    <input type="submit" name="accionesusu" value="Acciones Usuarios" class="nav-link bg-dark border-0 text-white" />
+                                  </li>
+                                  <li class="nav-item">
                                     <input type="submit" name="insertarprov" value="Insertar proveedores" class="nav-link bg-dark border-0 text-white" />
                                   </li>';  
                         }else if($_SESSION['perfil']==2){
@@ -40,6 +43,7 @@
                         echo '<li class="nav-item">
                                 <input type="submit" name="cerrar" value="Cerrar sesion" class="nav-link bg-dark border-0 text-white" />
                               </li>
+
                               <li class="nav-item">
                                 <p class="nav-link bg-dark border-0 text-white">USUARIO CONECTADO: '.$_SESSION['nombre'].'</p>
                               </li>';

@@ -3,7 +3,7 @@
     <div class="container d-flex flex-row justify-content-evenly flex-wrap mt-5 mb-5 w-75">
 <?php
     foreach($data as $fila){
-        echo '<div class="col card h-100" style="width:18rem;">
+        echo '<div class="card h-100" style="width:18rem;">
             <img src="data:image/jpeg;base64,' . $fila['imagen'] . '" class="" card-img-top" alt="'.$fila['nombre_prod'].'">
             <div class="card-body">
                 <p>'.$fila['nom_prov'].'</p>
