@@ -1,6 +1,6 @@
 
 <div id="prod_container" class="container">
-    <div class="row row-cols-lg-3 row-cols-1 justify-content-evenly">
+    <div class="container d-flex flex-row justify-content-evenly flex-wrap mt-5 mb-5 w-75">
 <?php
     foreach($data as $fila){
         echo '<div class="col card h-100" style="width:18rem;">
