@@ -157,9 +157,9 @@ class WebController extends ControladorBase {
             $data = array();
             $this->view("registrarse", $data);
         }
-        if(isset($_POST['accionesusu'])){
+        if(isset($_POST['acciones'])){
             $data = array();
-            $this->view("accionesusu", $data);
+            $this->view("acciones", $data);
         }
         if (isset($_POST['productos'])){
             if(!isset($_SESSION['limite'])){
@@ -233,6 +233,18 @@ class WebController extends ControladorBase {
             $data = array();
             $this->view("añadirusu", $data);
         };
+        if(isset($_POST['listusu'])){
+            $data = $this->clientesmodel->getAll();
+            $this->view("listusu", $data);
+        };
+    }
+
+    public function modborrar(){
+        if(isset($_POST['borrar'])){
+            $this->clientesmodel->borrarCliente($_POST['id_usu']);
+            $data = $this->clientesmodel->getAll();
+            $this->view("listusu", $data);
+        }
     }
 }
 

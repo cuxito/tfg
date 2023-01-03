@@ -59,7 +59,7 @@ class ClientesModel extends Conexion {
     }
     public function getCliente($nombre) {
         try {
-            $sql = "select * from $this->table where nombre=?";
+            $sql = "select * from $this->table where nombre_comp=?";
             $sentencia = $this->conexion->prepare($sql);
             $sentencia->bindParam(1, $nombre);
             $sentencia->execute();
@@ -107,6 +107,35 @@ class ClientesModel extends Conexion {
             $sentencia->bindParam(4, $id);
             $num = $sentencia->execute();
             return $conn->lastInsertId();
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function getAll() {
+        try {
+            $sql = "select id_usuario, nombre_comp, email, tipo from $this->table where tipo = 'cliente'";
+            if($_SESSION['perfil']==1){
+                $sql = $sql." or tipo = 'empleado'";
+            };
+            
+            $sentencia = $this->conexion->prepare($sql);
+            $sentencia->execute();
+            $registros = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+            return $registros;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function borrarCliente($id_usu) {
+        try {
+            $sql = "delete from $this->table where id_usuario = ?";
+            $sentencia = $this->conexion->prepare($sql);
+            $sentencia->bindParam(1, $id_usu);
+            $sentencia->execute();
+            $registros = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+            return $registros;
         } catch (PDOException $e) {
             return $e->getMessage();
         }

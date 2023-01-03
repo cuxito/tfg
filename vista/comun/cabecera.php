@@ -30,7 +30,7 @@
                                     <input type="submit" name="listmodprov" value="Listar/Modificar proveedores" class="nav-link bg-dark border-0 text-white" />
                                   </li>
                                   <li class="nav-item">
-                                    <input type="submit" name="accionesusu" value="Acciones Usuarios" class="nav-link bg-dark border-0 text-white" />
+                                    <input type="submit" name="acciones" value="Acciones" class="nav-link bg-dark border-0 text-white" />
                                   </li>
                                   <li class="nav-item">
                                     <input type="submit" name="insertarprov" value="Insertar proveedores" class="nav-link bg-dark border-0 text-white" />

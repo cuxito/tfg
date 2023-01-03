@@ -2,5 +2,6 @@
 <div class="container">
     <form method="post" action="<?php echo $this->url("web", "acciones"); ?>">
         <input type="submit" class="btn-primary btn" value="Añadir usuarios" name="añadirusu">
+        <input type="submit" class="btn-primary btn" value="listar usuarios" name="listusu">
     </form>
 </div>
