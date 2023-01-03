@@ -245,6 +245,10 @@ class WebController extends ControladorBase {
             $data = $this->clientesmodel->getAll();
             $this->view("listusu", $data);
         }
+        if(isset($_POST['mod'])){
+            $data = $this->clientesmodel->getCliente($_POST['id_usu']);
+            $this->view('modusu', $data);
+        }
     }
 }
 

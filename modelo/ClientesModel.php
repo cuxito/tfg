@@ -57,11 +57,11 @@ class ClientesModel extends Conexion {
             return $e->getMessage();
         }
     }
-    public function getCliente($nombre) {
+    public function getCliente($id) {
         try {
-            $sql = "select * from $this->table where nombre_comp=?";
+            $sql = "select id_usuario, nombre_comp, email, tipo from $this->table where id_usuario=?";
             $sentencia = $this->conexion->prepare($sql);
-            $sentencia->bindParam(1, $nombre);
+            $sentencia->bindParam(1, $id);
             $sentencia->execute();
             $registros = $sentencia->fetchAll(PDO::FETCH_ASSOC);
             return $registros;
@@ -91,19 +91,19 @@ class ClientesModel extends Conexion {
             return $e->getMessage();
         }
     }
-    public function modificaCliente($id, $direccion,
-            $email, $telef) {
+    public function modificaCliente($id, $nombre,
+            $email, $tipo) {
 
-        $consulta = "update $this->table set direccion=?, email=?, telef=? where idcliente = ?";
+        $consulta = "update $this->table set nombre_comp=?, email=?, tipo=?, where id_ususario = ?";
         $conn = $this->getConexion();
         if ($conn == null) {
             return "<h2>ERROR. CONEXIÓN NO ESTABLECIDA.</h2>";
         }
         try {
             $sentencia = $conn->prepare($consulta);
-            $sentencia->bindParam(1, $direccion);
+            $sentencia->bindParam(1, $nombre);
             $sentencia->bindParam(2, $email);
-            $sentencia->bindParam(3, $telef);
+            $sentencia->bindParam(3, $tipo);
             $sentencia->bindParam(4, $id);
             $num = $sentencia->execute();
             return $conn->lastInsertId();
