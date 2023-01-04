@@ -24,6 +24,12 @@
                     .'<input type="number" max="'.$fila['stock'].'" min="1" value="1"></input>';
                 echo '</div>';
                 echo '<button class="btn btn-success">Comprar</button>';
+                if(isset($_SESSION['perfil'])){
+                  if($_SESSION['perfil']<3){
+                    echo '<button class="btn btn-primary">Modificar</button>';
+                    echo '<button class="btn btn-danger">Borrar</button>';
+                  }
+                }
             echo '</div>';
         echo '</div>';
     }
