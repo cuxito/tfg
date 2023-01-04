@@ -29,48 +29,23 @@ class WebController extends ControladorBase {
                 $nombre = $datos->getNombre_comp();
                 $dat = array('mensaje' => "Bienvenido usuario: " . $nombre,
                     'nombre' => $nombre, 'clave' => $clave);
-
-                $_SESSION['perfil'] = 1;
+                switch ($datos->getTipo()) {
+                    case 'administrador':
+                        $_SESSION['perfil']=1;
+                        break;
+                    case 'empleado':
+                        $_SESSION['perfil']=2;
+                        break;
+                    default:
+                        $_SESSION['perfil']=3;
+                        break;
+                }
                 $_SESSION['nombre'] = $nombre;
                 $_SESSION['idcliente'] = $datos->getId_usuario();
             } else {
                 $dat = array('mensaje' => $datos, 'nombre' => $email, 'clave' => $clave);
             }
-        $this->view("conectarse", $dat);
-    }
-
-    public function registrar(){
-        $nombre = $_POST['nombre'];
-        $email = $_POST['email'];
-        $clave = $_POST['clave'];
-        $tipo = $_POST['tipo'];
-        $cliente = new Clientes(0, $nombre, $email, $clave, $tipo);
-        $men = $this->clientesmodel->getClienteemail($email);
-        if (is_object($men)) {
-            $mensaje = "Ya existe un cliente con ese email.";
-            $cliente = $men;
-        } else {
-            $lastid = $this->clientesmodel->insertaCliente($nombre, $email, $clave, $tipo);
-            if (is_numeric($lastid)) {
-                if($_SESSION['perfil']!=1){
-                    $_SESSION['nombre']=$nombre;
-                    if($tipo=="empleado"){
-                        $_SESSION['perfil']=2;
-                    }else{$_SESSION['perfil']=3;}
-                }
-                $mensaje = "Usuario Registrado ";
-            } else {
-                $mensaje = "HA OCURRIDO UN ERROR EN LA INSERCIÓN";
-            }
-        }
-        $dat = array("cliente"=>$cliente, "mensaje"=>$mensaje);
-        if($_SESSION['perfil']==1){
-            $this->view("añadirusu", $dat);
-        }else{
-            $this->view("registrarse", $dat);
-        };
-        
-        
+        header('location: index.php');
     }
 
     
@@ -237,6 +212,45 @@ class WebController extends ControladorBase {
             $data = $this->clientesmodel->getAll();
             $this->view("listusu", $data);
         };
+        if(isset($_POST['mod'])){
+            $this->clientesmodel->modificaCliente($_POST['id_usu'], $_POST['nombre'], $_POST['email'], $_POST['tipo']);
+            $cliente = $this->clientesmodel->getCliente($_POST['id_usu']);
+            $mensaje = 'Se ha actualizado el usuario '. $_POST['email'];
+            $data = array("cliente"=>$cliente, "mensaje"=>$mensaje);
+            $this->view("modusu", $data);
+        }
+        if(isset($_POST['registrar'])){
+            $nombre = $_POST['nombre'];
+            $email = $_POST['email'];
+            $clave = $_POST['clave'];
+            $tipo = $_POST['tipo'];
+            
+            $cliente = new Clientes(0, $nombre, $email, $clave, $tipo);
+            $men = $this->clientesmodel->getClienteemail($email);
+            if (is_object($men)) {
+                $mensaje = "Ya existe un cliente con ese email.";
+                $cliente = $men;
+            } else {
+                $lastid = $this->clientesmodel->insertaCliente($nombre, $email, $clave, $tipo);
+                if (is_numeric($lastid)) {
+                        if($_SESSION['perfil']!=1){
+                            $_SESSION['nombre']=$nombre;
+                            if($tipo=="empleado"){
+                                $_SESSION['perfil']=2;
+                            }else{$_SESSION['perfil']=3;}
+                        }
+                    $mensaje = "Usuario Registrado ";
+                } else {
+                    $mensaje = "HA OCURRIDO UN ERROR EN LA INSERCIÓN";
+                }
+            }
+            $dat = array("cliente"=>$cliente, "mensaje"=>$mensaje);
+            if($_SESSION['perfil']==1){
+                $this->view("añadirusu", $dat);
+            }else{
+                $this->view("registrarse", $dat);
+            };
+        }
     }
 
     public function modborrar(){

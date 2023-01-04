@@ -5,7 +5,7 @@
         }
     ?>
     
-    <form action="<?php echo $this->url("web", "registrar")?>" class="col-6" method="post">
+    <form action="<?php echo $this->url("web", "acciones")?>" class="col-6" method="post">
     <h4 class="text-center">Registrarse</h4>
     <div class="border rounded p-2">
         <div class="mb-3">
@@ -20,7 +20,8 @@
           <label class="form-label">Password</label>
           <input type="password" class="form-control" name="clave" required>
         </div>
-        <button type="submit" class="btn btn-primary w-100">Submit</button>
-    </div>
+        <input type="hidden" name="tipo" value="cliente">
+        <button type="submit" class="btn btn-primary w-100" name="registrar">Registrarme</button>
+    </>
 </form>
 </div>

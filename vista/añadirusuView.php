@@ -5,7 +5,7 @@
         }
     ?>
     
-    <form action="<?php echo $this->url("web", "registrar")?>" class="col-6" method="post">
+    <form action="<?php echo $this->url("web", "acciones")?>" class="col-6" method="post">
     <h4 class="text-center">Añadir usuario nuevo</h4>
     <div class="border rounded p-2">
         <div class="mb-3">
@@ -28,7 +28,7 @@
                 <option value="administrador">Administrador</option>
             </select>
         </div>
-        <button type="submit" class="btn btn-primary w-100">Submit</button>
+        <button type="submit" class="btn btn-primary w-100" name="registrar">Añadir usuario</button>
     </div>
 </form>
 </div>
