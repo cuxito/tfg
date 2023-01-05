@@ -1,3 +1,12 @@
+<?php 
+  if(isset($_SESSION['perfil'])){
+    echo 'perfil '. $_SESSION['perfil'];
+  }
+  if(isset($_SESSION['carrito'])){
+    var_dump($_SESSION['carrito']);
+  }
+?>
+
 <!DOCTYPE HTML>
 <html>
     <head>
@@ -47,6 +56,11 @@
                               <li class="nav-item">
                                 <p class="nav-link bg-dark border-0 text-white">USUARIO CONECTADO: '.$_SESSION['nombre'].'</p>
                               </li>';
+                        if(isset($_SESSION['carrito'])){
+                          echo '<li class="nav-item">
+                                    <input type="submit" name="carrito" value="Carrito" class="nav-link bg-dark border-0 text-white"/>
+                                  </li>';
+                        }
                     }else{
                         echo '<li class="nav-item">
                   <input type="submit" name="conectar" value="Conectarse" class="nav-link bg-dark border-0 text-white" />

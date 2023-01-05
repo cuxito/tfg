@@ -136,6 +136,10 @@ class WebController extends ControladorBase {
             $data = array();
             $this->view("acciones", $data);
         }
+        if(isset($_POST['carrito'])){
+            $data = array();
+            $this->view("carrito", $data);
+        }
         if (isset($_POST['productos'])){
             if(!isset($_SESSION['limite'])){
                 $_SESSION['limite'] = 9;
@@ -261,7 +265,47 @@ class WebController extends ControladorBase {
         }
         if(isset($_POST['mod'])){
             $data = $this->clientesmodel->getCliente($_POST['id_usu']);
+            $data=array('cliente'=>$data);
             $this->view('modusu', $data);
+        }
+    }
+
+    public function accionesprod(){
+        if(isset($_POST['añadircarro'])){
+            if(!isset($_SESSION['perfil'])){
+                $data = array();
+                $this->view("conectarse", $data);
+            }
+            else{
+                if(isset($_SESSION['carrito'])){
+                    $existe = false;
+                    //unset($_SESSION['carrito']);
+                    $x=0;
+
+                    foreach ($_SESSION['carrito'] as $prod) {
+                        if(!$existe && $prod[0]==$_POST['id_prod']){
+                            $existe = true;
+                            $_SESSION['carrito'][$x][2] = $prod[2] + $_POST['cantidad'];
+                        }
+                        $x++;
+                    }
+                    if(!$existe){  
+                        $producto = array();
+                        array_push($producto, $_POST['id_prod'], $_POST['nombre_prod'],(int) $_POST['cantidad'], $_POST['precio']);
+                        array_push($_SESSION['carrito'], $producto);
+                    }
+                    $data = $this->productosmodel->getProductos($_SESSION['categoria'], $_SESSION['pagactual'], $_SESSION['limite']);   
+                    $this -> view("productos", $data);
+                }
+                else{
+                    $producto = array();
+                    array_push($producto, $_POST['id_prod'], $_POST['nombre_prod'],(int) $_POST['cantidad'], $_POST['precio'], $_POST['imagen']);
+                    $_SESSION['carrito']=array();
+                    array_push($_SESSION['carrito'], $producto);
+                    $data = $this->productosmodel->getProductos($_SESSION['categoria'], $_SESSION['pagactual'], $_SESSION['limite']);   
+                    $this -> view("productos", $data);
+                }
+            }
         }
     }
 }

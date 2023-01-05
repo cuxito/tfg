@@ -5,6 +5,7 @@
     foreach($data as $fila){
         echo '<div class="card h-100" style="width:18rem;">
             <img src="data:image/jpeg;base64,' . $fila['imagen'] . '" class="" card-img-top" alt="'.$fila['nombre_prod'].'">
+            <form method="post" action="'. $this->url("web", "accionesprod").'">
             <div class="card-body">
                 <p>'.$fila['nom_prov'].'</p>
                 <h5 class="card-tittle">'.$fila['nombre_prod'].'</h5>
@@ -13,24 +14,30 @@
                     if ($fila['descuento']!= ''){
                         echo '<h3 style="color:red;">'.round($fila['PVP']-(($fila['PVP']*$fila['descuento'])/100),2).'€</h3>'
                         .'<h5>'.$fila['descuento'].'%</h5>
-                        <p>'.$fila['PVP'].'€</p>';
+                        <p>'.$fila['PVP'].'€</p>'
+                        .'<input type="hidden" name="precio" value="'.round($fila['PVP']-(($fila['PVP']*$fila['descuento'])/100),2).'">';
                     }
                     else{
-                        echo '<h3>'.$fila['PVP'].'€</h3>';
+                        echo '<h3>'.$fila['PVP'].'€</h3>'
+                        .'<input type="hidden" name="precio" value="'.$fila['PVP'].'">';;
                     };
                 echo '</div>';
                 echo '<div class="card-cantidad">'
                     .'<label>cantidad:</label>'
-                    .'<input type="number" max="'.$fila['stock'].'" min="1" value="1"></input>';
+                    .'<input type="number" max="'.$fila['stock'].'" min="1" value="1" name="cantidad">';
                 echo '</div>';
-                echo '<button class="btn btn-success">Comprar</button>';
+                echo '<input type="submit" class="btn btn-success" name="añadircarro" value="Añadir al Carrito">';
                 if(isset($_SESSION['perfil'])){
                   if($_SESSION['perfil']<3){
-                    echo '<button class="btn btn-primary">Modificar</button>';
-                    echo '<button class="btn btn-danger">Borrar</button>';
+                    echo '<input type="submit" class="btn btn-primary" name="modprod" value="Modificar">';
+                    echo '<input type="submit" class="btn btn-danger" name="borrprod" value="Borrar">';
                   }
                 }
+                echo '<input type="hidden" name="id_prod" value="'.$fila['id_producto'].'">';
+                echo '<input type="hidden" name="imagen" value="'.$fila['imagen'].'">';
+                echo '<input type="hidden" name="nombre_prod" value="'.$fila['nombre_prod'].'">';
             echo '</div>';
+            echo '</form>';
         echo '</div>';
     }
 ?>
