@@ -73,4 +73,17 @@ class productosModel extends Conexion{
         }
         
     }
+
+    public function compraProducto($id,$cantidad){
+        try {
+            $sql = "update $this->table set stock = stock-?, n_ventas=n_ventas+? where id_producto=?";
+            $sentencia = $this->conexion->query($sql);
+            $sentencia->bindParam(3, $id);
+            $sentencia->bindParam(2, $cantidad);
+            $sentencia->bindParam(1, $cantidad);
+            $sentencia->execute();
+        } catch (PDOException $e) {
+            return "ERROR AL CARGAR.<br>" . $e->getMessage();
+        }
+    }
 }

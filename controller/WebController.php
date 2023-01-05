@@ -291,7 +291,7 @@ class WebController extends ControladorBase {
                     }
                     if(!$existe){  
                         $producto = array();
-                        array_push($producto, $_POST['id_prod'], $_POST['nombre_prod'],(int) $_POST['cantidad'], $_POST['precio']);
+                        array_push($producto, $_POST['id_prod'], $_POST['nombre_prod'],(int) $_POST['cantidad'], $_POST['precio'], $_POST['imagen']);
                         array_push($_SESSION['carrito'], $producto);
                     }
                     $data = $this->productosmodel->getProductos($_SESSION['categoria'], $_SESSION['pagactual'], $_SESSION['limite']);   
@@ -306,6 +306,19 @@ class WebController extends ControladorBase {
                     $this -> view("productos", $data);
                 }
             }
+        }
+    }
+
+    public function accionescarro(){
+        if(isset($_POST['borrarcarro'])){
+            unset($_SESSION['carrito']);
+            header('location: index.php');
+        }
+        if(isset($_POST['realizarcompra'])){
+            foreach ($_SESSION['carrito'] as $fila) {
+                $this->productosmodel->compraProducto($fila[0], $fila[2]);
+            }
+            unset($_SESSION['carrito']);
         }
     }
 }

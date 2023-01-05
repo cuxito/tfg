@@ -2,9 +2,6 @@
   if(isset($_SESSION['perfil'])){
     echo 'perfil '. $_SESSION['perfil'];
   }
-  if(isset($_SESSION['carrito'])){
-    var_dump($_SESSION['carrito']);
-  }
 ?>
 
 <!DOCTYPE HTML>
