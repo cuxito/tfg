@@ -316,6 +316,7 @@ class WebController extends ControladorBase {
         }
         if(isset($_POST['realizarcompra'])){
             foreach ($_SESSION['carrito'] as $fila) {
+                
                 $this->productosmodel->compraProducto($fila[0], $fila[2]);
             }
             unset($_SESSION['carrito']);
