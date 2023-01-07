@@ -52,5 +52,19 @@ class comprasModel extends Conexion{
             return "ERROR AL CARGAR.<br>" . $e->getMessage();
         }
     }
+    public function listarCompraid($id_compra){
+        try {
+            $sql = "select fecha, productos.nombre_prod, productos.imagen, id_usuario, cantidad, importe, num_compra from compra inner join productos on productos.id_producto = compra.id_producto where num_compra = ?";
+            $sentencia = $this->conexion->prepare($sql);
+            $sentencia->bindParam(1, $id_compra);
+            $sentencia->execute();
+            $registros = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+            $sentencia = null;
+            // Retorna el array de registros
+            return $registros;
+        } catch (PDOException $e) {
+            return "ERROR AL CARGAR.<br>" . $e->getMessage();
+        }
+    }
 
 }

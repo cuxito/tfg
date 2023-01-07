@@ -35,7 +35,13 @@
                 if($data[$x+1]['num_compra']!=$ini){
                     echo '<tr class="table-info">
                             <th>Importe total</th>
-                            <td colspan="3">'.$importetotal.'€</td>
+                            ';
+                    if(isset($fila['id_usuario'])){
+                        echo'<td>'.$importetotal.'€</td>
+                            <th>Id usuario</th>
+                            <td>'.$fila['id_usuario'].'</td>';
+                    }else{echo '<td colspan="3">'.$importetotal.'€</td>';}
+                    echo '
                         </tr>
                         </tbody>
                         </table>
@@ -45,12 +51,18 @@
             else{
                 
                 echo '<tr class="table-info">
-                        <th>Importe total</th>
-                        <td colspan="3">'.$importetotal.'€</td>
-                    </tr>
-                    </tbody>
-                    </table>
-                    </div>';
+                            <th>Importe total</th>
+                            ';
+                    if(isset($fila['id_usuario'])){
+                        echo'<td>'.$importetotal.'€</td>
+                            <th>Id usuario</th>
+                            <td>'.$fila['id_usuario'].'</td>';
+                    }else{echo '<td colspan="3">'.$importetotal.'€</td>';}
+                    echo '
+                        </tr>
+                        </tbody>
+                        </table>
+                        </div>';
             }
             $x++;
         }

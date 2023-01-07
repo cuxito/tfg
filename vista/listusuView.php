@@ -22,7 +22,7 @@
                             <td>'. $fila['nombre_comp'] .'</td>
                             <td>'. $fila['email'] .'</td>
                             <td>'. $fila['tipo'] .'</td>
-                            <form method="post" action="'. $this->url("web", "modborrar") .'">
+                            <form method="post" action="'. $this->url("web", "modborrarcli") .'">
                                 <input type="hidden" name="id_usu" value="'. $fila['id_usuario'] .'">
                                 <td><input type="submit" value="Modificar" name="mod" class="btn btn-danger"></td>
                                 <td><input type="submit" value="Borrar" name="borrar" class="btn btn-danger"></td>
