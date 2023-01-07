@@ -3,7 +3,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">id_usu</th>
+                <th scope="col">id usuario</th>
                 <th scope="col">Nombre</th>
                 <th scope="col">Email</th>
                 <th scope="col">tipo</th>

@@ -1,12 +1,3 @@
-<?php 
-  if(isset($_SESSION['perfil'])){
-    echo 'perfil '. $_SESSION['perfil'];
-  }
-  if(isset($_SESSION['id_usu'])){
-    echo $_SESSION['id_usu'];
-  }
-?>
-
 <!DOCTYPE HTML>
 <html>
     <head>

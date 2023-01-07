@@ -141,7 +141,7 @@ class WebController extends ControladorBase {
         }
         
         if(isset($_POST['cerrar'])){
-            unset($_SESSION);
+            unset($_SESSION['perfil']);
             header('location: index.php');
         }
         if(isset($_POST['listmodprov'])){
@@ -311,7 +311,7 @@ class WebController extends ControladorBase {
 
             foreach ($_SESSION['carrito'] as $fila) {
                 $importe=$fila[3]*$fila[2];
-                var_dump($this->comprasmodel->insertarCompra($fila[0],$_SESSION['id_usu'],$fila[2],$importe,$n_compra));
+                $this->comprasmodel->insertarCompra($fila[0],$_SESSION['id_usu'],$fila[2],$importe,$n_compra);
                 $this->productosmodel->compraProducto($fila[0], $fila[2]);
             }
             unset($_SESSION['carrito']);
