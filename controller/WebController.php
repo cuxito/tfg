@@ -1,10 +1,11 @@
 <?php
 
+use function PHPSTORM_META\type;
+
 class WebController extends ControladorBase {
 
     private $clientesmodel;
     private $comprasmodel;
-    private $detallecompramodel;
     private $productosmodel;
     private $proveedoresmodel;
 
@@ -12,6 +13,7 @@ class WebController extends ControladorBase {
         parent::__construct();
         $this->clientesmodel = new ClientesModel();
         $this->productosmodel = new productosModel();
+        $this->comprasmodel = new comprasModel();
     }
 
     public function index() {
@@ -27,6 +29,7 @@ class WebController extends ControladorBase {
             $datos = $this->clientesmodel->comprobarusuclave($email, $clave);
             if (is_object($datos)) {
                 $nombre = $datos->getNombre_comp();
+                $_SESSION['id_usu'] = $datos->getId_usuario();
                 $dat = array('mensaje' => "Bienvenido usuario: " . $nombre,
                     'nombre' => $nombre, 'clave' => $clave);
                 switch ($datos->getTipo()) {
@@ -99,26 +102,6 @@ class WebController extends ControladorBase {
         $this->view("insertprov", $data);
     }
 
-    public function borrarcompra() {
-        $id = $_POST['idcompra'];
-        if(isset($_POST['borrardetalles'])){
-            $this->detallecompramodel->borrardetalle($id);
-        }
-        
-        $detalles = $this->detallecompramodel->tienedetalles($id);
-        if(sizeof($detalles)!= 0){
-            $det = sizeof($detalles);
-            $compras = $this->comprasmodel->getAll($_SESSION['idcliente']);
-            $data = array("detalles"=>$det, "compras"=>$compras, "id"=>$id);
-            $this->view("listcompra", $data);
-        }
-        else{
-            $mensaje = $this->comprasmodel->borrar($id);
-            $compras = $this->comprasmodel->getAll($_SESSION['idcliente']);
-            $data = array("mensaje"=>$mensaje, "compras"=>$compras, "id"=>$id);
-            $this->view("listcompra", $data);
-        }
-    }
 
     public function menucabecera() {
         if (isset($_POST['inicio'])) {
@@ -151,13 +134,15 @@ class WebController extends ControladorBase {
             $data = $this->productosmodel->getProductos($_SESSION['categoria'], 1, $_SESSION['limite']);
             $this -> view("productos", $data);
         }
+
+        if(isset($_POST['listcompra'])){
+            $data = $this->comprasmodel->listarComprascliente($_SESSION['id_usu']);
+            $this->view("listcompras", $data);
+        }
         
         if(isset($_POST['cerrar'])){
-            unset($_SESSION['nombre']);
-            unset($_SESSION['perfil']);
-            unset($_SESSION['idcliente']);
-            $data = array();
-            $this->view("index", $data);
+            unset($_SESSION);
+            header('location: index.php');
         }
         if(isset($_POST['listmodprov'])){
             $data=array("proveedores"=>json_decode(file_get_contents("http://localhost/ArroyoPerezSergioserv"),true));
@@ -166,10 +151,6 @@ class WebController extends ControladorBase {
         if(isset($_POST['insertarprov'])){
             $data = array();
             $this->view("insertprov", $data);
-        }
-        if(isset($_POST['listcompra'])){
-            $data = (array("compras"=> $this->comprasmodel->getProductos($_SESSION['idcliente'])));
-            $this->view("listcompra", $data);
         }
     }
     public function menucategorias() {
@@ -228,7 +209,7 @@ class WebController extends ControladorBase {
             $email = $_POST['email'];
             $clave = $_POST['clave'];
             $tipo = $_POST['tipo'];
-            
+
             $cliente = new Clientes(0, $nombre, $email, $clave, $tipo);
             $men = $this->clientesmodel->getClienteemail($email);
             if (is_object($men)) {
@@ -236,13 +217,18 @@ class WebController extends ControladorBase {
                 $cliente = $men;
             } else {
                 $lastid = $this->clientesmodel->insertaCliente($nombre, $email, $clave, $tipo);
+                $_SESSION['id_usu']=$lastid;
                 if (is_numeric($lastid)) {
+                    if(isset($_SESSION['perfil'])){
                         if($_SESSION['perfil']!=1){
                             $_SESSION['nombre']=$nombre;
                             if($tipo=="empleado"){
                                 $_SESSION['perfil']=2;
                             }else{$_SESSION['perfil']=3;}
                         }
+                    }else{
+                        $_SESSION['perfil']=3;
+                    }
                     $mensaje = "Usuario Registrado ";
                 } else {
                     $mensaje = "HA OCURRIDO UN ERROR EN LA INSERCIÓN";
@@ -315,11 +301,21 @@ class WebController extends ControladorBase {
             header('location: index.php');
         }
         if(isset($_POST['realizarcompra'])){
+            $n = $this->comprasmodel->maxNcompra();
+            $n_compra= $n[0]['num_compra'];
+            if($n_compra=='NULL'){+
+                $n_compra=1;
+            }else{
+                $n_compra=$n_compra+1;
+            }
+
             foreach ($_SESSION['carrito'] as $fila) {
-                
+                $importe=$fila[3]*$fila[2];
+                var_dump($this->comprasmodel->insertarCompra($fila[0],$_SESSION['id_usu'],$fila[2],$importe,$n_compra));
                 $this->productosmodel->compraProducto($fila[0], $fila[2]);
             }
             unset($_SESSION['carrito']);
+            header('location: index.php');
         }
     }
 }
