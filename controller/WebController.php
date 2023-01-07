@@ -14,6 +14,7 @@ class WebController extends ControladorBase {
         $this->clientesmodel = new ClientesModel();
         $this->productosmodel = new productosModel();
         $this->comprasmodel = new comprasModel();
+        $this->proveedoresmodel = new proveedoresModel();
     }
 
     public function index() {
@@ -50,58 +51,6 @@ class WebController extends ControladorBase {
             }
         header('location: index.php');
     }
-
-    
-    public function modprov() {
-        $id = $_POST['codproveedor'];
-        $data = array("proveedor"=>json_decode(file_get_contents("http://localhost/ArroyoPerezSergioserv?id=".$id),true));
-        $this->view("modificar", $data);
-    }
-
-    public function modificar() {
-        $id = $_POST['codproveedor'];
-        $envio = json_encode(array("codproveedor"=>$_POST['codproveedor'], "nombre"=>$_POST['nombre'], "poblacion"=>$_POST['poblacion'], "telefono"=>$_POST['telefono'], "categoria"=>$_POST['categoria']));
-        $urlmiservicio = "http://localhost/ArroyoPerezSergioserv/";
-        $conexion = curl_init();
-        curl_setopt($conexion, CURLOPT_URL, $urlmiservicio);
-        //Cabecera, tipo de datos y longitud de envío
-        curl_setopt($conexion, CURLOPT_HTTPHEADER, 
-              array('Content-type: application/json', 'Content-Length: ' . mb_strlen($envio)));
-        //Tipo de petición
-         curl_setopt($conexion, CURLOPT_CUSTOMREQUEST, 'PUT');
-        //Campos que van en el envío
-        curl_setopt($conexion, CURLOPT_POSTFIELDS, $envio);
-        //para recibir una respuesta
-        curl_setopt($conexion, CURLOPT_RETURNTRANSFER, true);
-
-        $res = curl_exec($conexion);
-        curl_close($conexion);
-        
-        $data = array("proveedor"=>json_decode(file_get_contents("http://localhost/ArroyoPerezSergioserv?id=".$id),true), "mensaje"=>$res);
-        $this->view("modificar", $data);
-    }
-    public function insertarprov() {
-        $envio = json_encode(array("nombre"=>$_POST['nombre'], "poblacion" => $_POST['poblacion'], "telefono" => $_POST['telefono'], "categoria"=>$_POST['categoria']));
-        $urlmiservicio = "http://localhost/ArroyoPerezSergioserv/";
-        $conexion = curl_init();
-        curl_setopt($conexion, CURLOPT_URL, $urlmiservicio);
-        //Cabecera, tipo de datos y longitud de envío
-        curl_setopt($conexion, CURLOPT_HTTPHEADER, 
-              array('Content-type: application/json', 'Content-Length: ' . mb_strlen($envio)));
-        //Tipo de petición
-         curl_setopt($conexion, CURLOPT_CUSTOMREQUEST, 'POST');
-        //Campos que van en el envío
-        curl_setopt($conexion, CURLOPT_POSTFIELDS, $envio);
-        //para recibir una respuesta
-        curl_setopt($conexion, CURLOPT_RETURNTRANSFER, true);
-
-        $res = curl_exec($conexion);
-        
-        curl_close($conexion);
-        $data = array("mensaje"=>$res, "proveedor"=>json_decode(file_get_contents("http://localhost/ArroyoPerezSergioserv/"),true));
-        $this->view("insertprov", $data);
-    }
-
 
     public function menucabecera() {
         if (isset($_POST['inicio'])) {
@@ -143,14 +92,6 @@ class WebController extends ControladorBase {
         if(isset($_POST['cerrar'])){
             unset($_SESSION['perfil']);
             header('location: index.php');
-        }
-        if(isset($_POST['listmodprov'])){
-            $data=array("proveedores"=>json_decode(file_get_contents("http://localhost/ArroyoPerezSergioserv"),true));
-            $this->view("listprov", $data);
-        }
-        if(isset($_POST['insertarprov'])){
-            $data = array();
-            $this->view("insertprov", $data);
         }
     }
     public function menucategorias() {
@@ -204,6 +145,29 @@ class WebController extends ControladorBase {
             $data = array("cliente"=>$cliente, "mensaje"=>$mensaje);
             $this->view("modusu", $data);
         }
+        
+        if(isset($_POST['modprov'])){
+            $this->proveedoresmodel->modificaProveedor($_POST['cod_prov'], $_POST['nombre'], $_POST['telefono'], $_POST['direccion']);
+            $proveedor = $this->proveedoresmodel->getProv($_POST['cod_prov']);
+            $mensaje = 'Se ha actualizado el proveedor '. $_POST['nombre'];
+            $data = array("proveedor"=>$proveedor, "mensaje"=>$mensaje);
+            $this->view("modprov", $data);
+        }
+        if(isset($_POST['añadirprov'])){
+            $data = array();
+            $this->view("añadirprov", $data);
+        }
+        if(isset($_POST['añadir'])){
+            $prov = $this->proveedoresmodel->getProvnombre($_POST['nombre']);
+            if(is_object($prov)){
+                $mensaje= "Ya existe un proveedor con ese nombre";
+            }else{
+                $this->proveedoresmodel->insertaProv($_POST['nombre'], $_POST['telefono'], $_POST['direccion']);
+                $mensaje = "Se ha registrado el proveedor ". $_POST['nombre'];
+            }
+            $data = array("mensaje"=>$mensaje);
+            $this->view("añadirprov",$data);
+        }
         if(isset($_POST['registrar'])){
             $nombre = $_POST['nombre'];
             $email = $_POST['email'];
@@ -241,9 +205,29 @@ class WebController extends ControladorBase {
                 $this->view("registrarse", $dat);
             };
         }
+        if(isset($_POST['listcompracli'])){
+            $cli = $this->clientesmodel->getClienteemail($_POST['emailcli']);
+            $cli = $cli->getId_usuario();
+            $data = $this->comprasmodel->listarComprascliente($cli);
+            $this->view("listcompras", $data);
+        }
+        if(isset($_POST['listcompraid'])){
+            $data = $this->comprasmodel->listarCompraid($_POST['idcompra']);
+            $this->view("listcompras", $data);
+        }
+
+        if(isset($_POST['listprov'])){
+            $data = $this->proveedoresmodel->listarproveedores();
+            $this->view("listprov", $data);
+        }
+        if(isset($_POST['restock'])){
+            $productos = $this->productosmodel->necesitaStock();
+            $data = array("productos"=>$productos);
+            $this->view("comprarprods", $data);
+        }
     }
 
-    public function modborrar(){
+    public function modborrarcli(){
         if(isset($_POST['borrar'])){
             $this->clientesmodel->borrarCliente($_POST['id_usu']);
             $data = $this->clientesmodel->getAll();
@@ -253,6 +237,24 @@ class WebController extends ControladorBase {
             $data = $this->clientesmodel->getCliente($_POST['id_usu']);
             $data=array('cliente'=>$data);
             $this->view('modusu', $data);
+        }
+    }
+
+    public function modborrarprov(){
+        if(isset($_POST['borrar'])){
+            $this->proveedoresmodel->borrarProv($_POST['cod_prov']);
+            $data = $this->proveedoresmodel->listarproveedores();
+            $this->view("listprov", $data);
+        }
+        if(isset($_POST['mod'])){
+            $data = $this->proveedoresmodel->getProv($_POST['cod_prov']);
+            $data=array('proveedor'=>$data);
+            $this->view('modprov', $data);
+        }
+        if(isset($_POST['comprar'])){
+            $productos = $this->proveedoresmodel->getProductosprov($_POST['cod_prov']);
+            $data = array("productos"=>$productos);
+            $this->view("comprarprods", $data);
         }
     }
 
@@ -312,11 +314,21 @@ class WebController extends ControladorBase {
             foreach ($_SESSION['carrito'] as $fila) {
                 $importe=$fila[3]*$fila[2];
                 $this->comprasmodel->insertarCompra($fila[0],$_SESSION['id_usu'],$fila[2],$importe,$n_compra);
-                $this->productosmodel->compraProducto($fila[0], $fila[2]);
+                $this->productosmodel->ventaProducto($fila[0], $fila[2]);
             }
             unset($_SESSION['carrito']);
             header('location: index.php');
         }
+    }
+
+    public function comprarprods(){
+        
+        $this->productosmodel->comprarProductos($_POST['id_prod'], $_POST['cantidad'], $_POST['precio']);
+        $productos = $this->proveedoresmodel->getProductosprov($_POST['cod_prov']);
+        $mensaje = "Se han comprado ". $_POST['cantidad'] . ' de '. $_POST['nombre'];
+        $data = array("mensaje"=>$mensaje, "productos"=>$productos);
+        $this->view("comprarprods", $data);
+        
     }
 }
 
