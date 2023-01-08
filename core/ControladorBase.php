@@ -25,6 +25,7 @@ class ControladorBase {
         foreach ($data as $id_assoc => $value) {
             $$id_assoc = $value;
         }
+        require_once './funciones.php';
         require_once 'vista/comun/cabecera.php';
         require_once 'vista/' . $vista . 'View.php';
         require_once 'vista/comun/pie.php';
