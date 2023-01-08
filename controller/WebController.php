@@ -15,6 +15,7 @@ class WebController extends ControladorBase {
         $this->productosmodel = new productosModel();
         $this->comprasmodel = new comprasModel();
         $this->proveedoresmodel = new proveedoresModel();
+
     }
 
     public function index() {
@@ -322,7 +323,7 @@ class WebController extends ControladorBase {
     }
 
     public function comprarprods(){
-        
+
         $this->productosmodel->comprarProductos($_POST['id_prod'], $_POST['cantidad'], $_POST['precio']);
         $productos = $this->proveedoresmodel->getProductosprov($_POST['cod_prov']);
         $mensaje = "Se han comprado ". $_POST['cantidad'] . ' de '. $_POST['nombre'];
