@@ -109,7 +109,7 @@ class proveedoresModel extends Conexion{
 
     public function getProductosprov($cod_prov){
         try {
-            $sql = "select proveedores.cod_prov, nom_prov, productos.imagen, productos.nombre_prod, productos.cantidad_prod, productos.id_producto, productos.precio_prov from $this->table inner join productos on proveedores.cod_prov = productos.cod_prov where proveedores.cod_prov = ?";
+            $sql = "select proveedores.cod_prov, nom_prov, productos.imagen, productos.nombre_prod, productos.cantidad_prod, productos.id_producto, productos.precio_prov, telefono, productos.fecha_caducidad from $this->table inner join productos on proveedores.cod_prov = productos.cod_prov where proveedores.cod_prov = ?";
             $sentencia = $this->conexion->prepare($sql);
             $sentencia->bindParam(1, $cod_prov);
             $sentencia->execute();

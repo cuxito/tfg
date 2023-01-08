@@ -28,20 +28,10 @@ var_dump($_SESSION);
                 </li>
                 <?php 
                     if(isset($_SESSION['perfil'])){
-                        if($_SESSION['perfil']==1){
+                        if($_SESSION['perfil']<3){
                             echo '<li class="nav-item">
-                                    <input type="submit" name="listmodprov" value="Listar/Modificar proveedores" class="nav-link bg-dark border-0 text-white" />
-                                  </li>
-                                  <li class="nav-item">
                                     <input type="submit" name="acciones" value="Acciones" class="nav-link bg-dark border-0 text-white" />
-                                  </li>
-                                  <li class="nav-item">
-                                    <input type="submit" name="insertarprov" value="Insertar proveedores" class="nav-link bg-dark border-0 text-white" />
-                                  </li>';  
-                        }else if($_SESSION['perfil']==2){
-                            echo '<li class="nav-item">
-                                    <input type="submit" name="listcompra" value="Listar/Borrar Compras" class="nav-link bg-dark border-0 text-white" />
-                                  </li>';  
+                                  </li>';
                         }
                         echo '<li class="nav-item">
                                 <input type="submit" name="cerrar" value="Cerrar sesion" class="nav-link bg-dark border-0 text-white" />

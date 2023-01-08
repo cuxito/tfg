@@ -12,5 +12,6 @@
         <input type="submit" class="btn-primary btn" value="Añadir proveedor" name="añadirprov">
         <input type="submit" class="btn-primary btn" value="listar proveedores" name="listprov">
         <input type="submit" class="btn-primary btn" value="ReStock" name="restock">
+        <input type="submit" class="btn-primary btn" value="Añadir producto" name="añadirprod">
     </form>
 </div>

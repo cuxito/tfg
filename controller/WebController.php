@@ -81,7 +81,8 @@ class WebController extends ControladorBase {
             $_SESSION['pagactual']=1;
             $paginas = $this->Conteo();
             $_SESSION['pags']=$paginas;
-            $data = $this->productosmodel->getProductos($_SESSION['categoria'], 1, $_SESSION['limite']);
+            $productos = $this->productosmodel->getProductos($_SESSION['categoria'], 1, $_SESSION['limite']);
+            $data= array("productos"=>$productos);
             $this -> view("productos", $data);
         }
 
@@ -105,7 +106,8 @@ class WebController extends ControladorBase {
         $_SESSION['pagactual']=1;
         $categoria = str_replace(" ", "-", implode($_POST));
         $_SESSION['categoria']=$categoria;
-        $data = $this->productosmodel->getProductos($_SESSION['categoria'], 1, $_SESSION['limite']);
+        $productos = $this->productosmodel->getProductos($_SESSION['categoria'], 1, $_SESSION['limite']);
+        $data = array("productos"=>$productos);
         $this -> view("productos", $data);
     }
     public function Conteo(){
@@ -126,7 +128,8 @@ class WebController extends ControladorBase {
             }
         };
         $_SESSION['pags'] = $this->Conteo();
-        $data = $this->productosmodel->getProductos($_SESSION['categoria'], $_SESSION['pagactual'], $_SESSION['limite']);   
+        $productos = $this->productosmodel->getProductos($_SESSION['categoria'], $_SESSION['pagactual'], $_SESSION['limite']);   
+        $data = array("productos"=>$productos);
         $this -> view("productos", $data);
     }
 
@@ -226,6 +229,11 @@ class WebController extends ControladorBase {
             $data = array("productos"=>$productos);
             $this->view("comprarprods", $data);
         }
+        if(isset($_POST['añadirprod'])){
+            $proveedores = $this->proveedoresmodel->listarproveedores();
+            $data = array("proveedores"=>$proveedores);
+            $this->view("añadirprod", $data);
+        }
     }
 
     public function modborrarcli(){
@@ -283,7 +291,8 @@ class WebController extends ControladorBase {
                         array_push($producto, $_POST['id_prod'], $_POST['nombre_prod'],(int) $_POST['cantidad'], $_POST['precio'], $_POST['imagen']);
                         array_push($_SESSION['carrito'], $producto);
                     }
-                    $data = $this->productosmodel->getProductos($_SESSION['categoria'], $_SESSION['pagactual'], $_SESSION['limite']);   
+                    $productos = $this->productosmodel->getProductos($_SESSION['categoria'], $_SESSION['pagactual'], $_SESSION['limite']);
+                    $data = array("productos"=>$productos);
                     $this -> view("productos", $data);
                 }
                 else{
@@ -291,10 +300,67 @@ class WebController extends ControladorBase {
                     array_push($producto, $_POST['id_prod'], $_POST['nombre_prod'],(int) $_POST['cantidad'], $_POST['precio'], $_POST['imagen']);
                     $_SESSION['carrito']=array();
                     array_push($_SESSION['carrito'], $producto);
-                    $data = $this->productosmodel->getProductos($_SESSION['categoria'], $_SESSION['pagactual'], $_SESSION['limite']);   
+                    $productos = $this->productosmodel->getProductos($_SESSION['categoria'], $_SESSION['pagactual'], $_SESSION['limite']);
+                    $data = array("productos"=>$productos);   
                     $this -> view("productos", $data);
                 }
             }
+        }
+
+        if(isset($_POST['borrprod'])){
+            $this->productosmodel->borrarProd($_POST['id_prod']);
+            $mensaje = "Se ha eliminado el producto ". $_POST['nombre_prod'];
+            $productos = $this->productosmodel->getProductos($_SESSION['categoria'], $_SESSION['pagactual'], $_SESSION['limite']);
+            $data = array("mensaje"=>$mensaje, "productos"=>$productos);
+            $this -> view("productos", $data);
+        }
+
+        if(isset($_POST['añadirprod'])){
+            $imagen = $_FILES['imagen'];
+            if ($imagen['error'] != UPLOAD_ERR_OK || $imagen['size'] == 0) {
+                $mensaje = "Selecciona una imagen correcta";
+            } else {
+                $imagen = file_get_contents($imagen['tmp_name']);
+                $imagen = base64_encode($imagen);
+                $mensaje = "Se ha insertado el producto ". $_POST['nombre_prod'];
+            }
+            if(isset($_POST['fecha_caducidad'])){
+                $fecha = $_POST['fecha_caducidad'];
+            }else{$fecha = null;}
+            $this->productosmodel->insertarProd($imagen, $_POST['nombre_prod'], $_POST['proveedor'], $_POST['cantidad_prod'], $_POST['categoria'], $_POST['stock'], $_POST['precio_compra'], $fecha);
+            $proveedores = $this->proveedoresmodel->listarproveedores();
+            $data=array("mensaje"=>$mensaje, "proveedores"=>$proveedores);
+            $this->view("añadirprod", $data);
+        }
+
+        if(isset($_POST['modprod'])){
+            $producto = $this->productosmodel->getProducto($_POST['id_prod']);
+            $proveedores = $this->proveedoresmodel->listarproveedores();
+            $data = array("producto"=>$producto, "proveedores"=>$proveedores);
+            $this->view("modprod", $data);
+        }
+        if(isset($_POST['modificar'])){
+            if($_FILES['imagen']['size']==0){
+                $imagen = "";
+                $mensaje = "Se ha modificado el producto ". $_POST['nombre_prod'];
+            }
+            else{
+                if ($imagen['error'] != UPLOAD_ERR_OK || $imagen['size'] == 0) {
+                    $mensaje = "Selecciona una imagen correcta";
+                } else {
+                    $imagen = file_get_contents($imagen['tmp_name']);
+                    $imagen = base64_encode($imagen);
+                    $mensaje = "Se ha modificado el producto ". $_POST['nombre_prod'];
+                }
+            }
+            if(isset($_POST['fecha_caducidad'])){
+                $fecha = $_POST['fecha_caducidad'];
+            }else{$fecha = null;}
+            $this->productosmodel->modificarProd($_POST['id_producto'],$imagen, $_POST['nombre_prod'], $_POST['proveedor'], $_POST['cantidad_prod'], $_POST['categoria'], $_POST['stock'], $_POST['precio_compra'], $fecha);
+            $proveedores = $this->proveedoresmodel->listarproveedores();
+            $producto = $this->productosmodel->getProducto($_POST['id_producto']);
+            $data=array("mensaje"=>$mensaje, "proveedores"=>$proveedores, "producto"=>$producto);
+            $this->view("modprod", $data);
         }
     }
 
@@ -323,9 +389,18 @@ class WebController extends ControladorBase {
     }
 
     public function comprarprods(){
-
-        $this->productosmodel->comprarProductos($_POST['id_prod'], $_POST['cantidad'], $_POST['precio']);
-        $productos = $this->proveedoresmodel->getProductosprov($_POST['cod_prov']);
+        if(isset($_POST['fecha_cad'])){
+            $fecha = $_POST['fecha_cad'];
+        }else{
+            $fecha = null;
+        }
+        var_dump($this->productosmodel->comprarProductos($_POST['id_prod'], $_POST['cantidad'], $_POST['precio'], $fecha));
+        if(isset($_POST['cod_prov'])){
+            $productos = $this->proveedoresmodel->getProductosprov($_POST['cod_prov']);
+        }
+        else{
+            $productos = $this->productosmodel->necesitaStock();
+        }
         $mensaje = "Se han comprado ". $_POST['cantidad'] . ' de '. $_POST['nombre'];
         $data = array("mensaje"=>$mensaje, "productos"=>$productos);
         $this->view("comprarprods", $data);

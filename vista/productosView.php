@@ -1,17 +1,22 @@
 
 <div id="prod_container" class="container">
+    <?php 
+      if(isset($data['mensaje'])){
+        echo '<h3 class="mt-4 rounded p-2 border text-center">'.$data['mensaje'].'</h3>';
+    }
+    ?>
     <div class="container d-flex flex-row justify-content-evenly flex-wrap mt-5 mb-5 w-75">
 <?php
-    foreach($data as $fila){
+    foreach($data['productos'] as $fila){
         echo '<div class="card h-100" style="width:18rem;">
-            <img src="data:image/jpeg;base64,' . $fila['imagen'] . '" class="" card-img-top" alt="'.$fila['nombre_prod'].'">
+            <img src="data:image/jpeg;base64,' . $fila['imagen'] . '" class="card-img-top" alt="'.$fila['nombre_prod'].'">
             <form method="post" action="'. $this->url("web", "accionesprod").'">
             <div class="card-body">
                 <p>'.$fila['nom_prov'].'</p>
                 <h5 class="card-tittle">'.$fila['nombre_prod'].'</h5>
                 <p class="cantidad-prod">'.$fila['cantidad_prod'].'<p>'
                 .'<div class="card-price">';
-                    if ($fila['descuento']!= ''){
+                    if ($fila['descuento']!= '0'){
                         echo '<h3 style="color:red;">'.round($fila['PVP']-(($fila['PVP']*$fila['descuento'])/100),2).'€</h3>'
                         .'<h5>'.$fila['descuento'].'%</h5>
                         <p>'.$fila['PVP'].'€</p>'

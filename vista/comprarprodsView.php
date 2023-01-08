@@ -14,10 +14,8 @@
                     if(isset($data['productos'][0]['stock'])){
                         echo '<th>Stock actual</th>';
                     }
-                    if(isset($data['productos'][0]['fecha_caducidad'])){
-                        echo '<th>Fecha_caducidad</th>';
-                    }
                 ?>
+                <th scope="col">Fecha caducidad</th>
                 <th scope="col">Cantidad</th>
                 <th scope="col">Comprar</th>
             </tr>
@@ -38,18 +36,24 @@
                         echo '<td>'.$fila['stock'].'</td>';
                     };
                     if(isset($fila['fecha_caducidad'])){
-                            $fecha = date_create(date("Y-m-d"));
-                            $fecha = date_add($fecha, date_interval_create_from_date_string('1 months'));
-                            echo '<td>'.$fila['fecha_caducidad'].'</td>';
+                        echo '<td>'.$fila['fecha_caducidad'].'</td>';
                     }else{
                         echo '<td>No perecedero</td>';
                     }
-                    echo '<form method="post" action="'. $this->url("web", "comprarprods") .'">
-                            <input type="hidden" name="cod_prov" value="'. $fila['cod_prov'] .'">
-                            <input type="hidden" name="id_prod" value="'. $fila['id_producto'] .'">
-                            <input type="hidden" name="nombre" value="'. $fila['nombre_prod'] .'">
-                            <input type="hidden" name="fecha_cad" value="'. $fila['fecha_caducidad'] .'">
-                            <input type="hidden" name="precio" value="'. $precio .'">
+                    echo '<form method="post" action="'. $this->url("web", "comprarprods") .'">';
+                            if(isset($fila['cod_prov'])){
+                                echo '
+                                <input type="hidden" name="cod_prov" value="'. $fila['cod_prov'] .'">';
+                            }
+                            echo '<input type="hidden" name="id_prod" value="'. $fila['id_producto'] .'">
+                            <input type="hidden" name="nombre" value="'. $fila['nombre_prod'] .'">';
+                            if(isset($fila['fecha_caducidad'])){
+                                $fecha = date_create(date("Y-m-d"));
+                                $fecha = date_add($fecha, date_interval_create_from_date_string('1 months'))->format('Y-m-d');
+                                echo '<input type="hidden" name="fecha_cad" value="'. $fecha .'">'; 
+                            }
+                            
+                            echo '<input type="hidden" name="precio" value="'. $precio .'">
                             <td><input type="number"';
                             if(isset($fila['stock'])){
                                 echo 'value="30" min="30"';
