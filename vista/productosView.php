@@ -32,7 +32,7 @@
                         .'<label>cantidad:</label>'
                         .'<input type="number" max="'.$fila['stock'].'" min="1" value="1" name="cantidad">';
                     echo '</div>';
-                    echo '<div class="añadiralcarrito"><input type="submit" class="btn btn-success hola" name="añadircarro" value="Añadir al Carrito"></div>';
+                    echo '<div class="añadiralcarrito"><input type="submit" class="btn btn-success btn-carro border-0" name="añadircarro" value="Añadir al Carrito"></div>';
                     if(isset($_SESSION['perfil'])){
                       if($_SESSION['perfil']<3){
                         echo '<input type="submit" class="btn btn-primary " name="modprod" value="Modificar">';

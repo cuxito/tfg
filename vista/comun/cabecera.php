@@ -14,106 +14,68 @@
     <header class="col-12 p-2 text-center header"><img src="./recursos/logo_biochito.png" class="logo" alt="logo-biochito"></header> 
     <nav class="navbar navbar-expand-lg navbar1">
       <div class="container-fluid">
-      <form method="post" action= "<?php echo $this->url("web", "menucabecera"); ?>" class="collapse navbar-collapse d-flex justify-content-between" >
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-white mx-auto">
+      <form method="post" action= "<?php echo $this->url("web", "menucabecera"); ?>" class="collapse navbar-collapse d-flex" >
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-white ">
                 <li class="nav-item">
-                  <input type="submit" name="inicio" value="Inicio" class="nav-link bg-dark border-0 text-white" />
+                  <input type="submit" name="inicio" value="Inicio" class="nav-link border-0 text-white nav-link1" />
                 </li>
                 <li class="nav-item">
-                  <input type="submit" name="productos" value="Productos" class="nav-link bg-dark border-0 text-white" />
+                  <input type="submit" name="productos" value="Productos" class="nav-link border-0 text-white nav-link1" />
                 </li>
                 <?php 
                     if(isset($_SESSION['perfil'])){
                         echo '<li class="nav-item">
-                                <p class="nav-link bg-dark border-0 text-white">Usuario: '.$_SESSION['nombre'].'</p>
+                                <p class="nav-link nav-link1 border-0 text-white">Usuario: '.$_SESSION['nombre'].'</p>
+                              </li>
+                              <li class="nav-item">
+                                <input type="submit" name="cerrar" value="Cerrar sesion" class="nav-link nav-link1  border-0 text-white" />
                               </li>';
+                        if($_SESSION['perfil']<3){
+                            echo '<li class="nav-item">
+                                    <button type="submit" class="nav-link position-relative nav-link1 border-0 text-light" name="acciones">
+                                    Acciones';
+                                    if(isset($_SESSION['mantenerstock'])){
+                                      echo '<span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border-0  rounded-circle">
+                                              <span class="visually-hidden">New alerts</span>
+                                            </span>';
+                                    }
+                                   echo'</button>
+                                  </li>';
+                        }
                     }else{
                       echo '<li class="nav-item">
-                              <input type="submit" name="conectar" value="Conectarse" class="nav-link bg-dark border-0 text-white" />
+                              <input type="submit" name="conectar" value="Conectarse" class="nav-link nav-link1 border-0 text-white" />
                             </li>
                             <li class="nav-item">
-                              <input type="submit" name="registrarse" value="Registrate" class="nav-link bg-dark border-0 text-white" />
+                              <input type="submit" name="registrarse" value="Registrate" class="nav-link nav-link1 border-0 text-white" />
                             </li>';
                     }
                 ?>
             </ul>
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-white mx-auto">
+            <ul class="nav me-auto mb-2 mb-lg-0 text-white justify-content-end">
                 <?php 
                     if(isset($_SESSION['perfil'])){
-                        if($_SESSION['perfil']<3){
-                            echo '<li class="nav-item">
-                                    <input type="submit" name="acciones" value="Acciones" class="nav-link bg-dark border-0 text-white" />
-                                  </li>';
-                        }
                         echo '<li class="nav-item">
-                                <input type="submit" name="cerrar" value="Cerrar sesion" class="nav-link bg-dark border-0 text-white" />
-                              </li>
-
-                              
-                              
-                              <li class="nav-item">
-                                <input type="submit" name="listcompra" value="Ver mis compras" class="nav-link bg-dark border-0 text-white" />
+                                <input type="submit" name="listcompra" value="Ver mis compras" class="nav-link border-0 text-white nav-link1" />
                               </li>';
                         if(isset($_SESSION['carrito'])){
                           echo '<li class="nav-item">
-                                    <input type="submit" name="carrito" value="Carrito" class="nav-link bg-dark border-0 text-white"/>
+                                    <button type="submit" class="nav-link position-relative nav-link1 border-0 text-light" name="carrito">
+                                    Carrito
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">'.sizeof($_SESSION['carrito']).'
+
+                                              <span class="visually-hidden">carrito</span>
+                                    </span>';
+                                    }
+                                   echo'</button>
                                   </li>';
                         }
-                    }
+                   
                 ?>
           </ul>
         </form>
       </div>
-    </nav>
-    
-    <nav class="navbar navbar-expand-lg navbar-light bg-dark text-white">
-  <div class="container-fluid">
-    <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarSupportedContent">
-        <form method="post" action= "<?php echo $this->url("web", "menucabecera"); ?>" >
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-white mx-auto">
-                <li class="nav-item">
-                  <input type="submit" name="inicio" value="Inicio" class="nav-link bg-dark border-0 text-white" />
-                </li>
-                <li class="nav-item">
-                  <input type="submit" name="productos" value="Productos" class="nav-link bg-dark border-0 text-white" />
-                </li>
-                <li class="nav-item">
-                  <input type="submit" name="registrarse" value="Registrate" class="nav-link bg-dark border-0 text-white" />
-                </li>
-                <?php 
-                    if(isset($_SESSION['perfil'])){
-                        if($_SESSION['perfil']<3){
-                            echo '<li class="nav-item">
-                                    <input type="submit" name="acciones" value="Acciones" class="nav-link bg-dark border-0 text-white" />
-                                  </li>';
-                        }
-                        echo '<li class="nav-item">
-                                <input type="submit" name="cerrar" value="Cerrar sesion" class="nav-link bg-dark border-0 text-white" />
-                              </li>
-
-                              <li class="nav-item">
-                                <p class="nav-link bg-dark border-0 text-white">USUARIO CONECTADO: '.$_SESSION['nombre'].'</p>
-                              </li>
-                              
-                              <li class="nav-item">
-                                <input type="submit" name="listcompra" value="Ver mis compras" class="nav-link bg-dark border-0 text-white" />
-                              </li>';
-                        if(isset($_SESSION['carrito'])){
-                          echo '<li class="nav-item">
-                                    <input type="submit" name="carrito" value="Carrito" class="nav-link bg-dark border-0 text-white"/>
-                                  </li>';
-                        }
-                    }else{
-                        echo '<li class="nav-item">
-                  <input type="submit" name="conectar" value="Conectarse" class="nav-link bg-dark border-0 text-white" />
-                </li>';
-                    }
-                ?>
-        </ul>
-        </form>
-    </div>
-  </div>
-</nav> 
+    </nav>   
 <nav class="navbar navbar-expand-lg navbar-light text-white">
     <div class="container-fluid">
       <form method="POST" action="<?php echo $this->url("web", "menucategorias"); ?>" class="collapse navbar-collapse d-flex justify-content-between">

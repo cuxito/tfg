@@ -1,5 +1,6 @@
-<h2>Acciones usuarios</h2>
-<div class="container">
+
+<div class="container mt-4">
+    <h2 class="text-center">Acciones</h2>
     <form method="post" action="<?php echo $this->url("web", "acciones"); ?>">
         <input type="submit" class="btn-primary btn" value="Añadir usuarios" name="añadirusu">
         <input type="submit" class="btn-primary btn" value="listar usuarios" name="listusu">

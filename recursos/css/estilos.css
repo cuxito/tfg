@@ -9,7 +9,9 @@
     --complementario2:#accc7b;
     --complementario3:#30391f;
 }
-
+p{
+    margin: 0;
+}
 .header{
     
     background-color: var(--beige);
@@ -17,12 +19,17 @@
 .logo{
     height: 150px;
 }
-
 .navbar{
     background-color: var(--complementario1);
 }
+.navbar1{
+    background-color: var(--dark);
+}
 .nav-link{
     background-color: var(--complementario1);
+}
+.nav-link1{
+    background-color: var(--dark);
 }
 .card-tittle{
     font-weight: bold;
@@ -41,3 +48,8 @@
     width: 100%;
     padding: 7px;
 }
+
+.btn-carro{
+    background-color: var(--complementario1);
+}
+
