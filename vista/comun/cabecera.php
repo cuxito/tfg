@@ -1,6 +1,3 @@
-<?php 
-var_dump($_SESSION);
-?>
 <!DOCTYPE HTML>
 <html>
     <head>

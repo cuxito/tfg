@@ -18,7 +18,7 @@
     function comprobarCaducidad(){
         try{
             $conn = getConexion();
-            $sql = "update productos set stock=0 where fecha_caducidad <= curdate()";
+            $sql = "update productos set stock=0 where fecha_caducidad <= curdate() and borrado=false";
             $sentencia = $conn->query($sql);
             $sentencia->execute();
             return $sentencia;
@@ -29,7 +29,7 @@
     function hacerDescuento(){
         try{
             $conn = getConexion();
-            $sql = "update productos set descuento = 30 where stock < 30 or (fecha_caducidad != '' and date_add(curdate(), interval 7 day) >= fecha_caducidad)";
+            $sql = "update productos set descuento = 30 where stock < 30 or (fecha_caducidad != '' and date_add(curdate(), interval 7 day) >= fecha_caducidad) and borrado=false";
             $sentencia = $conn->query($sql);
             $sentencia->execute();
             return $sentencia;
@@ -41,7 +41,7 @@
     function quitarDescuento(){
         try{
             $conn = getConexion();
-            $sql = "update productos set descuento = 0 where stock >= 30";
+            $sql = "update productos set descuento = 0 where stock >= 30 and borrado=false";
             $sentencia = $conn->query($sql);
             $sentencia->execute();
             return $sentencia;
@@ -53,7 +53,7 @@
     function nuevoStock(){
         try{
             $conn = getConexion();
-            $sql = "update productos set stock = stock_precio_nuevo, PVP = nuevo_precio, nuevo_precio = 0, stock_precio_nuevo = 0 where stock = 0 and stock_precio_nuevo != 0";
+            $sql = "update productos set stock = stock_precio_nuevo, PVP = nuevo_precio, nuevo_precio = 0, stock_precio_nuevo = 0 where stock = 0 and stock_precio_nuevo != 0 and borrado=false";
             $sentencia = $conn->query($sql);
             $sentencia->execute();
             return $sentencia;
@@ -64,7 +64,7 @@
     function comprobarStock(){
         try{
             $conn = getConexion();
-            $sql = "select id_producto from productos where stock<30 or fecha_caducidad< date_add(curdate(), interval 7 day)";
+            $sql = "select id_producto from productos where stock<30 or fecha_caducidad< date_add(curdate(), interval 7 day) and borrado=false";
             $sentencia = $conn->query($sql);
             $registros = $sentencia->fetchAll(PDO::FETCH_ASSOC);
             $sentencia = null;

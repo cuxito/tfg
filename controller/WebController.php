@@ -92,7 +92,7 @@ class WebController extends ControladorBase {
         }
         
         if(isset($_POST['cerrar'])){
-            unset($_SESSION['perfil']);
+            session_unset();
             header('location: index.php');
         }
     }
@@ -314,7 +314,7 @@ class WebController extends ControladorBase {
         if(isset($_POST['borrprod'])){
             $this->productosmodel->borrarProd($_POST['id_prod']);
             $mensaje = "Se ha eliminado el producto ". $_POST['nombre_prod'];
-            $accion= "borrar";
+            $accion= "eliminar";
             $this->clientesmodel->insertarGestion($_SESSION['id_usu'], $_POST['id_prod'], $accion, $mensaje);
             $productos = $this->productosmodel->getProductos($_SESSION['categoria'], $_SESSION['pagactual'], $_SESSION['limite']);
             $data = array("mensaje"=>$mensaje, "productos"=>$productos);

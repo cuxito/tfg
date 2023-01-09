@@ -142,7 +142,6 @@ class ClientesModel extends Conexion {
 
     public function insertarGestion($id_usu, $id_prod, $accion, $mensaje){
         try {
-            var_dump($accion);
             $sql = "insert into empleado_gestiona (fecha, id_usuario, id_producto, accion, descripcion) values (now(), ?, ?, ?, ?)";
             $sentencia = $this->conexion->prepare($sql);
             $sentencia->bindParam(1, $id_usu);
