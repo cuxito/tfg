@@ -53,3 +53,32 @@ p{
     background-color: var(--complementario1);
 }
 
+.pie{
+    height: 7rem;
+    width: 100%;
+    background-color: var(--beige);
+    bottom: 0;
+    text-align: center;
+}
+
+.foot{
+    display: inline-block;
+    width: 30%;
+    margin: 0;
+    height: 100%;
+    vertical-align: top;
+}
+
+.logofoot{
+    width: auto;
+    height: 100%;
+    position: relative;
+}
+.foot2{
+    padding-top: 20px;
+}
+.redes{
+    width: 40px;
+    height: 40px;
+    margin: 10px;
+}
