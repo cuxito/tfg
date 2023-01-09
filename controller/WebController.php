@@ -185,6 +185,7 @@ class WebController extends ControladorBase {
                 $cliente = $men;
             } else {
                 $lastid = $this->clientesmodel->insertaCliente($nombre, $email, $clave, $tipo);
+                $_SESSION['nombre']=$nombre;
                 $_SESSION['id_usu']=$lastid;
                 if (is_numeric($lastid)) {
                     if(isset($_SESSION['perfil'])){

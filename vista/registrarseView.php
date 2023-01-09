@@ -22,6 +22,6 @@
         </div>
         <input type="hidden" name="tipo" value="cliente">
         <button type="submit" class="btn btn-primary w-100" name="registrar">Registrarme</button>
-    </>
+    </div>
 </form>
 </div>
