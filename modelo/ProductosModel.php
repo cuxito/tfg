@@ -48,7 +48,7 @@ class productosModel extends Conexion{
     
     public function getDestacados() {
         try {
-            $sql = "select id_producto, nombre_prod, cantidad_prod, stock, PVP, descuento, imagen from $this->table order by n_ventas asc limit 5";
+            $sql = "select id_producto, nombre_prod, cantidad_prod, stock, PVP, descuento, imagen, proveedores.nom_prov from $this->table inner join proveedores on (productos.cod_prov = proveedores.cod_prov) order by n_ventas asc limit 5";
             $statement = $this->conexion->query($sql);
             $registros = $statement->fetchAll(PDO::FETCH_ASSOC);
             $statement = null;
@@ -62,7 +62,7 @@ class productosModel extends Conexion{
     public function getOfertas() {
         
         try {
-            $sql = "select id_producto, nombre_prod, cantidad_prod, stock, PVP, descuento, imagen from $this->table order by descuento desc limit 5";
+            $sql = "select id_producto, nombre_prod, cantidad_prod, stock, PVP, descuento, imagen, proveedores.nom_prov from $this->table inner join proveedores on (productos.cod_prov = proveedores.cod_prov) order by descuento desc limit 5";
             $statement = $this->conexion->query($sql);
             $registros = $statement->fetchAll(PDO::FETCH_ASSOC);
             $statement = null;

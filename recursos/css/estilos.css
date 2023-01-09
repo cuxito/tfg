@@ -1,70 +1,43 @@
-
-
-body {
-    background-image: url("../imagenes/fondo.jpg");
-    color: #192666;
-    font-family: tahoma;
-    font-size: 85%;
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap'); 
+*{
+    font-family: 'Roboto', sans-serif;
+}
+:root{
+    --beige: #f9f6d8;
+    --complementario1: #668a4c;
+    --dark: #464646;
+    --complementario2:#accc7b;
+    --complementario3:#30391f;
 }
 
-/* *********************** contenedor *************************** */
-
-.contenedor {
-    width: 80%;
-    margin: 0 auto;
-    background: #F2F5FE;
+.header{
+    
+    background-color: var(--beige);
+}
+.logo{
+    height: 150px;
 }
 
-.centro
-{
-    width: 70%;
-    margin: 0 auto;
-    background: #F2F5FE;
+.navbar{
+    background-color: var(--complementario1);
 }
-/* *********************** cabecera *************************** */
-
-.cabecera {
-    background: url("../imagenes/cabecera.jpg");
-    color: white;
-    height: 100px;
+.nav-link{
+    background-color: var(--complementario1);
 }
-
-.cabecera h1 {
-    font-family: arial;
-    padding-left: 20px;
-    padding-top: 24px;
-}
-
-.cabecera a {
-    float: right;
-    padding-top: 24px;
-    overflow: hidden;
-    height: 0px;
-}
-
-.cabecera .inicio {
-    background: url("../imagenes/home.png") no-repeat;
-}
-
-.cabecera .inicio:hover {
-    background: url("../imagenes/home2.png") no-repeat;
-}
-
-.menu {
-    background: #D4EFDF ;
-    text-align: center;
-     padding: 5px;
-    height: 50px;
-}
-/* *********************** pie *************************** */
-
-.pie {
-    clear: both;
-    background: url("../imagenes/cabecera.jpg");
-    height: 100px;
-    color: white;
+.card-tittle{
     font-weight: bold;
-    padding-top: 5px;
-    text-align: center;
-    font-family: arial;
+}
+.cantidad-prod{
+    color: var(--complementario2);
+}
+
+.card:hover{
+    border: 2px solid var(--complementario1);
+}
+
+.añadiralcarrito{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 7px;
 }

@@ -47,10 +47,11 @@ class WebController extends ControladorBase {
                 }
                 $_SESSION['nombre'] = $nombre;
                 $_SESSION['idcliente'] = $datos->getId_usuario();
+                header('location: index.php');
             } else {
                 $dat = array('mensaje' => $datos, 'nombre' => $email, 'clave' => $clave);
+                $this->view("conectarse", $dat);
             }
-        header('location: index.php');
     }
 
     public function menucabecera() {
@@ -98,18 +99,19 @@ class WebController extends ControladorBase {
     }
     public function menucategorias() {
         
-        $paginas = $this->Conteo();
-        $_SESSION['pags'] = $paginas;
         if(!isset($_SESSION['limite'])){
                 $_SESSION['limite'] = 9;
             }
         $_SESSION['pagactual']=1;
         $categoria = str_replace(" ", "-", implode($_POST));
         $_SESSION['categoria']=$categoria;
+        $paginas = $this->Conteo();
+        $_SESSION['pags'] = $paginas;
         $productos = $this->productosmodel->getProductos($_SESSION['categoria'], 1, $_SESSION['limite']);
         $data = array("productos"=>$productos);
         $this -> view("productos", $data);
     }
+
     public function Conteo(){
         $conteo = $this->productosmodel->getConteo($_SESSION['categoria']);
         $conteo = $conteo[0]['conteo'];

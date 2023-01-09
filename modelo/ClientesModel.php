@@ -158,7 +158,7 @@ class ClientesModel extends Conexion {
 
     public function listarGestiones(){
         try {
-            $sql = "select fecha, empleado_gestiona.id_usuario, usuarios.nombre_comp, empleado_gestiona.id_producto, productos.nombre_prod, accion, descripcion from empleado_gestiona 
+            $sql = "select fecha, empleado_gestiona.id_usuario, usuarios.nombre_comp, usuarios.tipo, empleado_gestiona.id_producto, productos.nombre_prod, accion, descripcion from empleado_gestiona 
             inner join usuarios on (empleado_gestiona.id_usuario = usuarios.id_usuario) inner join productos on (empleado_gestiona.id_producto = productos.id_producto)";
             $sentencia = $this->conexion->prepare($sql);
             $sentencia->execute();

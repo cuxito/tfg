@@ -1,5 +1,3 @@
-<?php ?>
-
 <div class="d-flex flex-column align-items-center p-3">
     <form class="col-6" action="<?php echo $this->url("web", "conectarse");?>" method="post">
     <h4 class="text-center">Inicia Sesion</h4>
@@ -9,11 +7,11 @@
     <div class="border rounded p-2">
         <div class="mb-3">
             <label class="form-label">Teclea email usuario:</label>
-            <input type="text" class="form-control" name="email">
+            <input type="text" class="form-control" name="email" <?php if(isset($nombre)){echo 'value="'.$nombre.'"';}?>>
         </div>
         <div class="mb-3">
             <label class="form-label">Teclea Contraseña</label>
-            <input type="password" class="form-control" name="clave">
+            <input type="password" class="form-control" name="clave" <?php if(isset($clave)){echo 'value="'.$clave.'"';}?>>
         </div>
 
         <button type="submit" class="btn btn-primary w-100">Entrar</button>
