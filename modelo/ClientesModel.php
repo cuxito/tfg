@@ -140,4 +140,34 @@ class ClientesModel extends Conexion {
         }
     }
 
+    public function insertarGestion($id_usu, $id_prod, $accion, $mensaje){
+        try {
+            var_dump($accion);
+            $sql = "insert into empleado_gestiona (fecha, id_usuario, id_producto, accion, descripcion) values (now(), ?, ?, ?, ?)";
+            $sentencia = $this->conexion->prepare($sql);
+            $sentencia->bindParam(1, $id_usu);
+            $sentencia->bindParam(2, $id_prod);
+            $sentencia->bindParam(3, $accion);
+            $sentencia->bindParam(4, $mensaje);
+            $sentencia->execute();
+            $registros = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+            return $registros;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function listarGestiones(){
+        try {
+            $sql = "select fecha, empleado_gestiona.id_usuario, usuarios.nombre_comp, empleado_gestiona.id_producto, productos.nombre_prod, accion, descripcion from empleado_gestiona 
+            inner join usuarios on (empleado_gestiona.id_usuario = usuarios.id_usuario) inner join productos on (empleado_gestiona.id_producto = productos.id_producto)";
+            $sentencia = $this->conexion->prepare($sql);
+            $sentencia->execute();
+            $registros = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+            return $registros;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
 }

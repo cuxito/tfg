@@ -234,6 +234,10 @@ class WebController extends ControladorBase {
             $data = array("proveedores"=>$proveedores);
             $this->view("añadirprod", $data);
         }
+        if(isset($_POST['listgestiones'])){
+            $data = $this->clientesmodel->listarGestiones();
+            $this->view("listgestiones", $data);
+        }
     }
 
     public function modborrarcli(){
@@ -310,6 +314,8 @@ class WebController extends ControladorBase {
         if(isset($_POST['borrprod'])){
             $this->productosmodel->borrarProd($_POST['id_prod']);
             $mensaje = "Se ha eliminado el producto ". $_POST['nombre_prod'];
+            $accion= "borrar";
+            $this->clientesmodel->insertarGestion($_SESSION['id_usu'], $_POST['id_prod'], $accion, $mensaje);
             $productos = $this->productosmodel->getProductos($_SESSION['categoria'], $_SESSION['pagactual'], $_SESSION['limite']);
             $data = array("mensaje"=>$mensaje, "productos"=>$productos);
             $this -> view("productos", $data);
@@ -323,11 +329,14 @@ class WebController extends ControladorBase {
                 $imagen = file_get_contents($imagen['tmp_name']);
                 $imagen = base64_encode($imagen);
                 $mensaje = "Se ha insertado el producto ". $_POST['nombre_prod'];
+                if(isset($_POST['fecha_caducidad'])){
+                    $fecha = $_POST['fecha_caducidad'];
+                }else{$fecha = null;}
+                $n = $this->productosmodel->insertarProd($imagen, $_POST['nombre_prod'], $_POST['proveedor'], $_POST['cantidad_prod'], $_POST['categoria'], $_POST['stock'], $_POST['precio_compra'], $fecha);
+                $accion= "añadir";
+                var_dump($this->clientesmodel->insertarGestion($_SESSION['id_usu'], $n, $accion, $mensaje));
             }
-            if(isset($_POST['fecha_caducidad'])){
-                $fecha = $_POST['fecha_caducidad'];
-            }else{$fecha = null;}
-            $this->productosmodel->insertarProd($imagen, $_POST['nombre_prod'], $_POST['proveedor'], $_POST['cantidad_prod'], $_POST['categoria'], $_POST['stock'], $_POST['precio_compra'], $fecha);
+            
             $proveedores = $this->proveedoresmodel->listarproveedores();
             $data=array("mensaje"=>$mensaje, "proveedores"=>$proveedores);
             $this->view("añadirprod", $data);
@@ -357,6 +366,8 @@ class WebController extends ControladorBase {
                 $fecha = $_POST['fecha_caducidad'];
             }else{$fecha = null;}
             $this->productosmodel->modificarProd($_POST['id_producto'],$imagen, $_POST['nombre_prod'], $_POST['proveedor'], $_POST['cantidad_prod'], $_POST['categoria'], $_POST['stock'], $_POST['precio_compra'], $fecha);
+            $accion= "modificar";
+            $this->clientesmodel->insertarGestion($_SESSION['id_usu'], $_POST['id_producto'], $accion, $mensaje);
             $proveedores = $this->proveedoresmodel->listarproveedores();
             $producto = $this->productosmodel->getProducto($_POST['id_producto']);
             $data=array("mensaje"=>$mensaje, "proveedores"=>$proveedores, "producto"=>$producto);
