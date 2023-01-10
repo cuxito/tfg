@@ -1,6 +1,6 @@
 <div class="container mt-4 contenedorindex">
     <div class="indexpromocion mb-4">
-        <h3>Productos destacados</h3>
+        <h3 class="promocion-tittle">Productos destacados</h3>
 <?php
     echo '<div class="card-group">';
     foreach($data['destacados'] as $fila){

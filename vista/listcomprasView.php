@@ -1,5 +1,9 @@
 <div class="container">
+    
     <?php 
+        if(sizeof($data)==0){
+            echo '<h1 class="text-center text-danger m-5"><i class="bi bi-exclamation-circle"></i> NO se han realizado compras todavia</h1>';
+        }
         $ini = 0;
         $x = 0;
         foreach($data as $fila){

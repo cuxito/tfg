@@ -187,7 +187,7 @@ class WebController extends ControladorBase {
                 $cliente = $men;
             } else {
                 $lastid = $this->clientesmodel->insertaCliente($nombre, $email, $clave, $tipo);
-                $_SESSION['nombre']=$nombre;
+                if(!isset($_SESSION['nombre'])){$_SESSION['nombre']=$nombre;};
                 $_SESSION['id_usu']=$lastid;
                 if (is_numeric($lastid)) {
                     if(isset($_SESSION['perfil'])){
@@ -337,7 +337,7 @@ class WebController extends ControladorBase {
                 }else{$fecha = null;}
                 $n = $this->productosmodel->insertarProd($imagen, $_POST['nombre_prod'], $_POST['proveedor'], $_POST['cantidad_prod'], $_POST['categoria'], $_POST['stock'], $_POST['precio_compra'], $fecha);
                 $accion= "añadir";
-                var_dump($this->clientesmodel->insertarGestion($_SESSION['id_usu'], $n, $accion, $mensaje));
+                $this->clientesmodel->insertarGestion($_SESSION['id_usu'], $n, $accion, $mensaje);
             }
             
             $proveedores = $this->proveedoresmodel->listarproveedores();
@@ -408,7 +408,7 @@ class WebController extends ControladorBase {
         }else{
             $fecha = null;
         }
-        var_dump($this->productosmodel->comprarProductos($_POST['id_prod'], $_POST['cantidad'], $_POST['precio'], $fecha));
+        $this->productosmodel->comprarProductos($_POST['id_prod'], $_POST['cantidad'], $_POST['precio'], $fecha);
         if(isset($_POST['cod_prov'])){
             $productos = $this->proveedoresmodel->getProductosprov($_POST['cod_prov']);
         }
