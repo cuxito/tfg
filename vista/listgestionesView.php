@@ -29,6 +29,8 @@
         </table>
     </div>';
     }else{
-        echo'No se han realizado gestiones todavia';
+        echo'<div class="container">
+            <h1 class="text-center text-danger m-5"><i class="bi bi-exclamation-circle"></i> NO se han realizado gestiones todavia</h1> 
+        </div>';
     }
 ?>

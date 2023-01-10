@@ -19,8 +19,8 @@
                             <td>'. $fila[1] .'</td>
                             <td>'. $fila[2] .'</td>
                             <td>'. $fila[3]*$fila[2] .'€</td>
-                            <form method="post" action="'. $this->url("web", "modborrar") .'">
-                                <input type="hidden" name="id_usu" value="'. $fila[0] .'">
+                            <form method="post" action="'. $this->url("web", "borrarprodcarro") .'">
+                                <input type="hidden" name="id_prod" value="'. $fila[0] .'">
                                 <td><input type="submit" value="Borrar" name="borrar" class="btn btn-danger"></td>
                             </form>
                     </tr>';
@@ -29,7 +29,7 @@
         </tbody>
     </table>
     <h3>Precio total: <?php echo $preciototal;?>€</h3>
-    <form method="post" action="<?php echo $this->url("web", "accionescarro") ?>">
+    <form method="post" action="<?php echo $this->url("web", "accionescarro") ?> "class="mb-4">
         <input type="submit" value="Realizar compra" class="btn btn-danger" name="realizarcompra">
         <input type="submit" value="borrar carro" class="btn btn-danger" name="borrarcarro">
     </form>

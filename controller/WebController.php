@@ -420,6 +420,19 @@ class WebController extends ControladorBase {
         $this->view("comprarprods", $data);
         
     }
+    public function borrarprodcarro(){
+        if(isset($_POST['borrar'])){
+            $x=0;
+            foreach ($_SESSION['carrito'] as $fila) {
+                if($fila[0]==$_POST['id_prod']){
+                    unset($_SESSION['carrito'][$x]);
+                }
+                $x++;
+            }
+            $data = array();
+            $this->view("carrito", $data);
+        }
+    }
 }
 
 ?>
