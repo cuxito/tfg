@@ -5,7 +5,7 @@
         echo '<h3 class="mt-4 rounded p-2 border text-center">'.$data['mensaje'].'</h3>';
     }
     ?>
-    <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="row row-cols-2 row-cols-md-4 g-4">
 <?php
     foreach($data['productos'] as $fila){
         echo '<div class="col">

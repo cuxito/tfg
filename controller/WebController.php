@@ -76,7 +76,7 @@ class WebController extends ControladorBase {
         }
         if (isset($_POST['productos'])){
             if(!isset($_SESSION['limite'])){
-                $_SESSION['limite'] = 9;
+                $_SESSION['limite'] = 8;
             }
             $_SESSION['categoria']="";
             $_SESSION['pagactual']=1;
@@ -100,7 +100,7 @@ class WebController extends ControladorBase {
     public function menucategorias() {
         
         if(!isset($_SESSION['limite'])){
-                $_SESSION['limite'] = 9;
+                $_SESSION['limite'] = 8;
             }
         $_SESSION['pagactual']=1;
         $categoria = str_replace(" ", "-", implode($_POST));
