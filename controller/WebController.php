@@ -1,7 +1,4 @@
 <?php
-
-use function PHPSTORM_META\type;
-
 class WebController extends ControladorBase {
 
     private $clientesmodel;
@@ -47,7 +44,8 @@ class WebController extends ControladorBase {
                 }
                 $_SESSION['nombre'] = $nombre;
                 $_SESSION['idcliente'] = $datos->getId_usuario();
-                header('location: index.php');
+                $data = array('destacados'=>$this->productosmodel->getDestacados(),'ofertas'=> $this->productosmodel->getOfertas());
+                $this->view("index", $data);
             } else {
                 $dat = array('mensaje' => $datos, 'nombre' => $email, 'clave' => $clave);
                 $this->view("conectarse", $dat);
@@ -94,7 +92,8 @@ class WebController extends ControladorBase {
         
         if(isset($_POST['cerrar'])){
             session_unset();
-            header('location: index.php');
+            $data = array('destacados'=>$this->productosmodel->getDestacados(),'ofertas'=> $this->productosmodel->getOfertas());
+            $this->view("index", $data);
         }
     }
     public function menucategorias() {
@@ -381,7 +380,8 @@ class WebController extends ControladorBase {
     public function accionescarro(){
         if(isset($_POST['borrarcarro'])){
             unset($_SESSION['carrito']);
-            header('location: index.php');
+            $data = array('destacados'=>$this->productosmodel->getDestacados(),'ofertas'=> $this->productosmodel->getOfertas());
+            $this->view("index", $data);
         }
         if(isset($_POST['realizarcompra'])){
             $n = $this->comprasmodel->maxNcompra();
@@ -398,7 +398,8 @@ class WebController extends ControladorBase {
                 $this->productosmodel->ventaProducto($fila[0], $fila[2]);
             }
             unset($_SESSION['carrito']);
-            header('location: index.php');
+            $data = array('destacados'=>$this->productosmodel->getDestacados(),'ofertas'=> $this->productosmodel->getOfertas());
+            $this->view("index", $data);
         }
     }
 
