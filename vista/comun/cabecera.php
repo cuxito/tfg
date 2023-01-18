@@ -19,13 +19,10 @@
                 <li class="nav-item">
                   <input type="submit" name="inicio" value="Inicio" class="nav-link border-0 text-white nav-link1" />
                 </li>
-                <li class="nav-item">
-                  <input type="submit" name="productos" value="Productos" class="nav-link border-0 text-white nav-link1" />
-                </li>
                 <?php 
                     if(isset($_SESSION['perfil'])){
                         echo '<li class="nav-item">
-                                <p class="nav-link nav-link1 border-0 text-white">Usuario: '.$_SESSION['nombre'].'</p>
+                                <p class="nav-link nav-link1 border-0 text-white">Hola '.$_SESSION['nombre'].'</p>
                               </li>
                               <li class="nav-item">
                                 <input type="submit" name="cerrar" value="Cerrar sesion" class="nav-link nav-link1  border-0 text-white" />
@@ -44,7 +41,7 @@
                         }
                     }else{
                       echo '<li class="nav-item">
-                              <input type="submit" name="conectar" value="Conectarse" class="nav-link nav-link1 border-0 text-white" />
+                              <input type="submit" name="conectar" value="Log In" class="nav-link nav-link1 border-0 text-white" />
                             </li>
                             <li class="nav-item">
                               <input type="submit" name="registrarse" value="Registrate" class="nav-link nav-link1 border-0 text-white" />
