@@ -13,7 +13,7 @@ p{
     margin: 0;
 }
 .header{
-    background-color: var(--beige);
+    background-color: red;
 }
 .logo{
     height: 150px;
@@ -38,7 +38,8 @@ p{
 }
 
 .card:hover{
-    border: 2px solid var(--complementario1);
+    background-color: red;
+    border: 20px dotted var(--complementario1) !important;
 }
 
 .añadiralcarrito{
