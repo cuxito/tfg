@@ -4,7 +4,9 @@
             echo '<h3 class="col-6 rounded p-2 border text-center">'.$data['mensaje'].'</h3>';
         }
     ?>
-    
+    <form class="w-50 mb-2" method="post" action="<?php echo $this->url("web", "acciones");?>">
+        <button type="submit" class="btn btn-danger w-100 mt-2" name="cancelar">Volver</button>
+    </form>
     <form enctype="multipart/form-data" action="<?php echo $this->url("web", "accionesprod")?>" class="col-6" method="post">
     <h4 class="text-center">Modificar Producto <?php echo $data['producto'][0]['nombre_prod'];?></h4>
     <div class="border rounded p-2">

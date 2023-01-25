@@ -135,6 +135,10 @@ class WebController extends ControladorBase {
     }
 
     public function acciones(){
+        if(isset($_POST['cancelar'])){
+            $data = array();
+            $this->view("acciones", $data);
+        }
         if(isset($_POST['añadirusu'])){
             $data = array();
             $this->view("añadirusu", $data);
@@ -144,7 +148,12 @@ class WebController extends ControladorBase {
             $this->view("listusu", $data);
         };
         if(isset($_POST['mod'])){
-            $this->clientesmodel->modificaCliente($_POST['id_usu'], $_POST['nombre'], $_POST['email'], $_POST['tipo']);
+            if(isset($_POST['nuevapass'])){
+                $clave = $_POST['nuevapass'];
+            }else{
+                $clave = $_POST['viejapass'];
+            }
+            $this->clientesmodel->modificaCliente($_POST['id_usu'], $_POST['nombre'], $_POST['email'], $_POST['tipo'], $clave);
             $cliente = $this->clientesmodel->getCliente($_POST['id_usu']);
             $mensaje = 'Se ha actualizado el usuario '. $_POST['email'];
             $data = array("cliente"=>$cliente, "mensaje"=>$mensaje);

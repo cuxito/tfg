@@ -1,8 +1,11 @@
 <div class="container mt-4 contenedorindex">
+    <form method="post" action="<?php echo $this->url("web", "menucabecera");?>" class="container-fluid p-0">
+        <input type="submit" name="productos" value="Ver todos los productos" class="btn btn-primary btn-lg btn-block w-100 btn-index">
+    </form>
     <div class="indexpromocion mb-4">
         <h3 class="promocion-tittle">Productos destacados</h3>
 <?php
-    echo '<div class="card-group">';
+    echo '<div class="row row-cols-2 row-cols-md-3 row-cols-lg-5">';
     foreach($data['destacados'] as $fila){
         echo '<div class="card">
             <img src="data:image/jpeg;base64,'.$fila['imagen'].'" class="card-img-top" alt="'.$fila['nombre_prod'].'">
@@ -30,8 +33,8 @@
     echo '</div>';
     echo '</div>';
     echo '<div class="indexpromocion mb-4">
-    <h3>Productos en oferta</h3>';
-    echo '<div class="card-group">';
+    <h3 class="promocion-tittle">Productos en oferta</h3>';
+    echo '<div class="row row-cols-2 row-cols-md-3 row-cols-lg-5">';
     foreach($data['ofertas'] as $fila){
         echo '<div class="card">
             <img src="data:image/jpeg;base64,'.$fila['imagen'].'" class="card-img-top" alt="'.$fila['nombre_prod'].'">
@@ -59,4 +62,5 @@
     echo '</div>';
     echo '</div>';
 ?>
+
 </div>

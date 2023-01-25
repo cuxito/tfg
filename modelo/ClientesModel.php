@@ -59,7 +59,7 @@ class ClientesModel extends Conexion {
     }
     public function getCliente($id) {
         try {
-            $sql = "select id_usuario, nombre_comp, email, tipo from $this->table where id_usuario=?";
+            $sql = "select id_usuario, nombre_comp, email, pass, tipo from $this->table where id_usuario=?";
             $sentencia = $this->conexion->prepare($sql);
             $sentencia->bindParam(1, $id);
             $sentencia->execute();
@@ -92,19 +92,21 @@ class ClientesModel extends Conexion {
         }
     }
     public function modificaCliente($id, $nombre,
-            $email, $tipo) {
+            $email, $tipo, $clave) {
 
-        $consulta = "update $this->table set nombre_comp=?, email=?, tipo=? where id_usuario=?";
+        $consulta = "update $this->table set nombre_comp=?, email=?, tipo=?, pass=? where id_usuario=?";
         $conn = $this->getConexion();
         if ($conn == null) {
             return "<h2>ERROR. CONEXIÓN NO ESTABLECIDA.</h2>";
         }
         try {
+            $password = password_hash($clave, PASSWORD_DEFAULT);
             $sentencia = $conn->prepare($consulta);
             $sentencia->bindParam(1, $nombre);
             $sentencia->bindParam(2, $email);
             $sentencia->bindParam(3, $tipo);
-            $sentencia->bindParam(4, $id);
+            $sentencia->bindParam(4, $password);
+            $sentencia->bindParam(5, $id);
             $sentencia->execute();
         } catch (PDOException $e) {
             return $e->getMessage();

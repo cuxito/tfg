@@ -5,7 +5,7 @@
         echo '<h3 class="mt-4 rounded p-2 border text-center">'.$data['mensaje'].'</h3>';
     }
     ?>
-    <div class="row row-cols-2 row-cols-md-4 g-4">
+    <div class="row row-cols-2 row-cols-lg-4 g-4">
 <?php
     foreach($data['productos'] as $fila){
         echo '<div class="col">
@@ -32,11 +32,11 @@
                         .'<label>cantidad:</label>'
                         .'<input type="number" max="'.$fila['stock'].'" min="1" value="1" name="cantidad">';
                     echo '</div>';
-                    echo '<div class="añadiralcarrito"><input type="submit" class="btn btn-success btn-carro border-0" name="añadircarro" value="Añadir al Carrito"></div>';
+                    echo '<div class="añadiralcarrito"><input type="submit" class="btn btn-success btn-carro border-0 w-100" name="añadircarro" value="Añadir al Carrito"></div>';
                     if(isset($_SESSION['perfil'])){
                       if($_SESSION['perfil']<3){
-                        echo '<input type="submit" class="btn btn-primary " name="modprod" value="Modificar">';
-                        echo '<input type="submit" class="btn btn-danger" name="borrprod" value="Borrar">';
+                        echo '<input type="submit" class="btn btn-primary w-50 " name="modprod" value="Modificar">';
+                        echo '<input type="submit" class="btn btn-danger w-50" name="borrprod" value="Borrar">';
                       }
                     }
                     echo '<input type="hidden" name="id_prod" value="'.$fila['id_producto'].'">';
