@@ -4,7 +4,9 @@
             echo '<h3 class="col-6 rounded p-2 border text-center">'.$mensaje.'</h3>';
         }
     ?>
-    
+    <form method="post" action="<?php echo $this->url("web", "acciones");?>" class="w-50 mb-2">
+        <button type="submit" class="btn btn-danger w-100 mt-2" name="cancelar">Volver</button>
+    </form>
     <form action="<?php echo $this->url("web", "acciones")?>" class="col-6" method="post">
     <h4 class="text-center">Añadir usuario nuevo</h4>
     <div class="border rounded p-2">

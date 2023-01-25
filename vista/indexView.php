@@ -5,7 +5,7 @@
     <div class="indexpromocion mb-4">
         <h3 class="promocion-tittle">Productos destacados</h3>
 <?php
-    echo '<div class="card-group md-3">';
+    echo '<div class="row row-cols-2 row-cols-md-3 row-cols-lg-5">';
     foreach($data['destacados'] as $fila){
         echo '<div class="card">
             <img src="data:image/jpeg;base64,'.$fila['imagen'].'" class="card-img-top" alt="'.$fila['nombre_prod'].'">
@@ -34,7 +34,7 @@
     echo '</div>';
     echo '<div class="indexpromocion mb-4">
     <h3 class="promocion-tittle">Productos en oferta</h3>';
-    echo '<div class="card-group">';
+    echo '<div class="row row-cols-2 row-cols-md-3 row-cols-lg-5">';
     foreach($data['ofertas'] as $fila){
         echo '<div class="card">
             <img src="data:image/jpeg;base64,'.$fila['imagen'].'" class="card-img-top" alt="'.$fila['nombre_prod'].'">

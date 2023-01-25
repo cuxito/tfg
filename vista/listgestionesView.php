@@ -2,6 +2,9 @@
 <?php 
     if(isset($data[0])){
         echo'<div class="container">
+        <form class="w-100 mb-2" method="post" action="<?php echo $this->url("web", "acciones");?>">
+            <button type="submit" class="btn btn-danger w-100 mt-2" name="cancelar">Volver</button>
+        </form>
         <table class="table mt-4">
             <thead class="table-dark">
                 <tr>

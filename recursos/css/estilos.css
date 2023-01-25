@@ -16,10 +16,12 @@ p{
     background-color: var(--beige);
 }
 .logo{
-    height: 150px;
+    height: 100px;
 }
 .navbar{
     background-color: var(--complementario1);
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
 }
 .navbar1{
     background-color: var(--dark);
@@ -113,4 +115,7 @@ p{
     background-color: var(--complementario2);
     color: var(--dark);
     outline: 3px solid var(--dark);
+}
+.table-dark{
+    --bs-table-bg: var(--dark);
 }

@@ -12,7 +12,7 @@
     <body>  
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <header class="col-12 p-2 text-center header"><img src="./recursos/logo_biochito.png" class="logo" alt="logo-biochito"></header> 
-    <nav class="navbar navbar-expand-lg navbar1">
+    <nav class="navbar navbar-expand navbar1">
       <div class="container-fluid">
       <form method="post" action= "<?php echo $this->url("web", "menucabecera"); ?>" class="collapse navbar-collapse d-flex" >
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-white ">
@@ -44,7 +44,7 @@
                               <input type="submit" name="conectar" value="Log In" class="nav-link nav-link1 border-0 text-white" />
                             </li>
                             <li class="nav-item">
-                              <input type="submit" name="registrarse" value="Registrate" class="nav-link nav-link1 border-0 text-white" />
+                              <input type="submit" name="registrarse" value="Sign up" class="nav-link nav-link1 border-0 text-white" />
                             </li>';
                     }
                 ?>
@@ -53,7 +53,7 @@
                 <?php 
                     if(isset($_SESSION['perfil'])){
                         echo '<li class="nav-item">
-                                <input type="submit" name="listcompra" value="Ver mis compras" class="nav-link border-0 text-white nav-link1" />
+                                <input type="submit" name="listcompra" value="Mis compras" class="nav-link border-0 text-white nav-link1" />
                               </li>';
                         if(isset($_SESSION['carrito'])){
                           echo '<li class="nav-item">
@@ -72,8 +72,13 @@
           </ul>
         </form>
       </div>
-    </nav>   
-<nav class="navbar navbar-expand-lg navbar-light text-white">
+    </nav>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvasLg" aria-controls="navbarOffcanvasLg">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="navbarOffcanvasLg" aria-labelledby="navbarOffcanvasLgLabel">
+  <nav class="navbar navbar-expand-lg navbar-light text-white">
     <div class="container-fluid">
       <form method="POST" action="<?php echo $this->url("web", "menucategorias"); ?>" class="collapse navbar-collapse d-flex justify-content-between">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-white mx-auto" id="subnav">
@@ -99,3 +104,5 @@
         </form>
     </div>
 </nav>
+  </div>
+</nav>   
