@@ -141,8 +141,9 @@ p{
 }
 body{
     display: flex;
+    min-height: 100vh;
     flex-direction: column;
 }
 .contenedor{
-    flex: 1;
+    flex-grow: 1;
 }
