@@ -19,9 +19,7 @@ p{
     height: 100px;
 }
 .navbar{
-    background-color: var(--complementario1);
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
+    background-color: transparent;
 }
 .navbar1{
     background-color: var(--dark);
@@ -63,8 +61,6 @@ p{
     width: 100%;
     background-color: var(--beige);
     padding-top: 10px;
-    position: relative;
-    bottom: 0;
     text-align: center;
 }
 
@@ -118,4 +114,35 @@ p{
 }
 .table-dark{
     --bs-table-bg: var(--dark);
+}
+
+.boton-menu{
+    background-color: var(--complementario1);
+    border: 2px solid var(--complementario2);
+    height: 50px;
+    margin: 0.5rem;
+}
+.image-menu{
+    height: 100%;
+    width: auto;
+}
+
+.offcanvas{
+    background-color: var(--complementario1);
+}
+
+@media (min-width: 992px) {
+    .navbar{
+        background-color: var(--complementario1);
+    }
+    .navbar1 {
+        background-color: var(--dark);
+    }
+}
+body{
+    display: flex;
+    flex-direction: column;
+}
+.contenedor{
+    flex: 1;
 }

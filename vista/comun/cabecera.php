@@ -73,9 +73,9 @@
         </form>
       </div>
     </nav>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvasLg" aria-controls="navbarOffcanvasLg">
-    <span class="navbar-toggler-icon"></span>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary p-0">
+  <button class="navbar-toggler boton-menu" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvasLg" aria-controls="navbarOffcanvasLg">
+    <span class="navbar-toggler-icon"><img src="./recursos/menu.png" class="image-menu"></span>
   </button>
   <div class="offcanvas offcanvas-start" tabindex="-1" id="navbarOffcanvasLg" aria-labelledby="navbarOffcanvasLgLabel">
   <nav class="navbar navbar-expand-lg navbar-light text-white">
@@ -105,4 +105,5 @@
     </div>
 </nav>
   </div>
-</nav>   
+</nav>
+<div class="contenedor">   

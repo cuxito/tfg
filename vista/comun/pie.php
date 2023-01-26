@@ -1,3 +1,4 @@
+</div>
 <footer class="pie">
         <div class="foot"><img src="./recursos/logo_biochito.png" class="logofoot"></div>
         <div class="foot">
